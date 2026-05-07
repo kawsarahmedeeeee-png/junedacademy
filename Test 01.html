@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Juned Academy – Test 01</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f1f2f6;
+      font-family: 'Segoe UI', 'Roboto', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 30px 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      padding: 30px 28px;
+    }
+
+    .logo-area {
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .academy-logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1e1e2a;
+      letter-spacing: -0.5px;
+    }
+    .academy-logo span {
+      color: #dc3545;
+    }
+    .test-title {
+      display: inline-block;
+      background: #f1f3f5;
+      padding: 5px 18px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #dc3545;
+      margin-top: 8px;
+      letter-spacing: 0.3px;
+      border: 1px solid #e9ecef;
+    }
+
+    .start-panel {
+      background: #f8f9fa;
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .name-label {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .name-input {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: 50px;
+      background: white;
+      transition: 0.2s;
+      font-family: inherit;
+      margin-bottom: 24px;
+    }
+    .name-input:focus {
+      border-color: #1e3c72;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(30, 60, 114, 0.1);
+    }
+
+    .btn-start, .btn-submit, .reset-btn {
+      border-radius: .25rem;
+      text-transform: uppercase;
+      font-style: normal;
+      font-weight: 600;
+      padding: 0 25px;
+      color: #fff;
+      -webkit-clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+      clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+      height: 48px;
+      font-size: 0.85rem;
+      line-height: 14px;
+      letter-spacing: 1.2px;
+      transition: .2s .1s;
+      background-image: linear-gradient(90deg, #1e3c72, #2b4f8c);
+      border: 0 solid;
+      overflow: hidden;
+      width: 100%;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .btn-start:hover, .btn-submit:hover, .reset-btn:hover {
+      cursor: pointer;
+      transition: all .3s ease-in;
+      padding-right: 35px;
+      padding-left: 35px;
+      background-image: linear-gradient(90deg, #163156, #1f3e6e);
+    }
+
+    .test-area {
+      display: none;
+    }
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 28px 0 18px 0;
+      padding-left: 6px;
+      border-left: 4px solid #1e3c72;
+      color: #212529;
+    }
+    .question-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      border: 1px solid #edf2f7;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .question-text {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #6c757d;
+      margin-bottom: 8px;
+    }
+    .bengali-text {
+      font-size: 1.3rem;
+      font-weight: 500;
+      background: #f8f9fa;
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 40px;
+      margin: 8px 0 14px 0;
+      font-family: 'Noto Sans Bengali', sans-serif;
+      color: #212529;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px 18px;
+      font-size: 0.95rem;
+      border: 1px solid #dee2e6;
+      border-radius: 50px;
+      margin-top: 6px;
+      font-family: inherit;
+      background: #fff;
+    }
+    input:focus, select:focus {
+      border-color: #1e3c72;
+      outline: none;
+    }
+    .mcq-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .mcq-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fefefe;
+      padding: 8px 16px;
+      border-radius: 50px;
+      border: 1px solid #e9ecef;
+    }
+    .mcq-option input {
+      width: auto;
+      margin: 0;
+      transform: scale(1.05);
+      accent-color: #1e3c72;
+    }
+    .mcq-option label {
+      font-size: 0.95rem;
+      cursor: pointer;
+      width: 100%;
+    }
+    .result-area {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 20px;
+      margin-top: 28px;
+      border: 1px solid #e9ecef;
+      display: none;
+    }
+    .student-header {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #212529;
+      background: #f8f9fa;
+      padding: 12px 18px;
+      border-radius: 60px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .student-header span {
+      color: #1e3c72;
+    }
+    .score-badge {
+      font-size: 1.7rem;
+      font-weight: 700;
+      text-align: center;
+      background: #212529;
+      color: white;
+      padding: 18px;
+      border-radius: 60px;
+      margin-bottom: 24px;
+    }
+    .details-table {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th, td {
+      border: 1px solid #dee2e6;
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      background: white;
+    }
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    .correct-status { color: #2b8c4a; font-weight: 600; }
+    .wrong-status { color: #dc3545; font-weight: 600; }
+    footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 0.7rem;
+      color: #adb5bd;
+    }
+    @media (max-width: 680px) {
+      .container { padding: 20px; }
+      .bengali-text { font-size: 1.1rem; }
+      th, td { font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="logo-area">
+    <div class="academy-logo">Juned <span>Academy</span></div>
+    <div class="test-title">Test 01</div>
+  </div>
+
+  <div id="startPanel" class="start-panel">
+    <div class="name-label">Enter your full name to begin</div>
+    <input type="text" id="studentNameInput" class="name-input" placeholder="e.g., Rahim Uddin" autocomplete="off">
+    <button id="startTestBtn" class="btn-start">Start Test</button>
+  </div>
+
+  <div id="testArea" class="test-area">
+    <div class="section-title">Part 1: Bengali → English</div>
+    <div id="translationQuestions"></div>
+
+    <div class="section-title">Part 2: Multiple Choice</div>
+    <div id="mcqQuestions"></div>
+
+    <button id="submitBtn" class="btn-submit">Submit & Get Score</button>
+    <button id="resetBtn" class="reset-btn">Start Over</button>
+  </div>
+
+  <div id="resultArea" class="result-area"></div>
+  <footer>Juned Academy — precise & modern practice tests</footer>
+</div>
+
+<script>
+  const translationData = [
+    {
+      bengali: "তোমার নাম কি?",
+      required: ["name"],
+      modelTranslation: "My name is... / What is your name?"
+    },
+    {
+      bengali: "তুমি কোথা থেকে এসেছ?",
+      required: ["from"],
+      modelTranslation: "I am from... / Where are you from?"
+    },
+    {
+      bengali: "তুমি কি পড়াশোনা কর?",
+      required: ["study"],
+      modelTranslation: "I study... / What do you study?"
+    },
+    {
+      bengali: "তুমি কি কফি পছন্দ কর?",
+      required: ["like", "coffee"],
+      modelTranslation: "Yes, I like coffee / No, I don't like coffee"
+    },
+    {
+      bengali: "তুমি কি হাঁটতে পছন্দ কর?",
+      required: ["like", "walk"],
+      modelTranslation: "Yes, I like to walk / No, I don't like to walk"
+    },
+    {
+      bengali: "তোমার কি মোবাইল ফোন আছে?",
+      required: ["have", "phone"],
+      modelTranslation: "Yes, I have a mobile phone / No, I don't have a mobile phone"
+    },
+    {
+      bengali: "তোমার গ্রামের নাম কি?",
+      required: ["village", "name"],
+      modelTranslation: "My village name is... / What's the name of your village?"
+    },
+    {
+      bengali: "তোমার প্রধান শিক্ষকের নাম কি?",
+      required: ["teacher", "name"],
+      modelTranslation: "My head teacher's name is... / What is your head teacher's name?"
+    }
+  ];
+
+  const mcqData = [
+    { question: "Which sentence is correct?", options: ["I study is class 10", "I study in class 10", "I study at class 10", "I study on class 10"], correctIndex: 1 },
+    { question: "I like to ___ tea", options: ["drink", "drinking", "eat", "go"], correctIndex: 0 }
+  ];
+
+  function wordSet(str) {
+    return new Set(str.toLowerCase().match(/\b\w+\b/g) || []);
+  }
+
+  function isTranslationCorrectFlex(userAnswer, requiredArr) {
+    const words = wordSet(userAnswer);
+    for (let req of requiredArr) {
+      if (!words.has(req.toLowerCase())) return false;
+    }
+    return true;
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  function buildTranslationUI() {
+    let html = '';
+    translationData.forEach((item, idx) => {
+      html += `
+        <div class="question-card">
+          <div class="question-text">Question ${idx+1}</div>
+          <div class="bengali-text">${item.bengali}</div>
+          <input type="text" id="trans_${idx}" class="trans-input" placeholder="Write English translation here..." autocomplete="off">
+        </div>
+      `;
+    });
+    document.getElementById('translationQuestions').innerHTML = html;
+  }
+
+  function buildMCQUI() {
+    let html = '';
+    mcqData.forEach((item, idx) => {
+      let optsHtml = '';
+      item.options.forEach((opt, optIdx) => {
+        optsHtml += `
+          <div class="mcq-option">
+            <input type="radio" name="mcq_${idx}" value="${optIdx}" id="mcq_${idx}_${optIdx}">
+            <label for="mcq_${idx}_${optIdx}">${escapeHtml(opt)}</label>
+          </div>
+        `;
+      });
+      html += `
+        <div class="question-card">
+          <div class="question-text">MCQ ${idx+1}: ${escapeHtml(item.question)}</div>
+          <div class="mcq-options">${optsHtml}</div>
+        </div>
+      `;
+    });
+    document.getElementById('mcqQuestions').innerHTML = html;
+  }
+
+  function computeAndShowResults() {
+    const studentName = document.getElementById('studentNameInput').value.trim();
+    const displayName = studentName === "" ? "Anonymous Student" : studentName;
+
+    let transResults = [];
+    for (let i = 0; i < translationData.length; i++) {
+      const userAns = document.getElementById(`trans_${i}`)?.value || "";
+      const q = translationData[i];
+      const isCorrect = isTranslationCorrectFlex(userAns, q.required);
+      transResults.push({
+        bengali: q.bengali,
+        userAnswer: userAns === "" ? "(no answer)" : userAns,
+        isCorrect,
+        correctDisplay: q.modelTranslation
+      });
+    }
+
+    let mcqResults = [];
+    for (let i = 0; i < mcqData.length; i++) {
+      let selectedVal = null;
+      const radios = document.getElementsByName(`mcq_${i}`);
+      for (let r of radios) if (r.checked) { selectedVal = parseInt(r.value); break; }
+      const isCorrect = (selectedVal === mcqData[i].correctIndex);
+      const userAnswerText = (selectedVal !== null) ? mcqData[i].options[selectedVal] : "Not answered";
+      mcqResults.push({
+        question: mcqData[i].question,
+        userAnswer: userAnswerText,
+        isCorrect,
+        correctAnswer: mcqData[i].options[mcqData[i].correctIndex]
+      });
+    }
+
+    const totalTrans = transResults.length;
+    const totalMCQ = mcqResults.length;
+    const totalCorrectTrans = transResults.filter(r => r.isCorrect).length;
+    const totalCorrectMCQ = mcqResults.filter(r => r.isCorrect).length;
+    const totalCorrect = totalCorrectTrans + totalCorrectMCQ;
+    const totalQuestions = totalTrans + totalMCQ;
+    const percent = Math.round((totalCorrect / totalQuestions) * 100);
+
+    let resultHtml = `
+      <div class="student-header">Student: <span>${escapeHtml(displayName)}</span></div>
+      <div class="score-badge">
+        Score: ${totalCorrect} / ${totalQuestions} (${percent}%)
+      </div>
+      <div class="details-table">
+        <table>
+          <thead><tr><th>#</th><th>Question / Bengali</th><th>Your Answer</th><th>Status</th><th>Correct Answer(s)</th></tr></thead>
+          <tbody>
+    `;
+    let counter = 1;
+    for (let r of transResults) {
+      resultHtml += `<tr>
+        <td>${counter++}</td>
+        <td><strong>Bengali:</strong> ${escapeHtml(r.bengali)}</td>
+        <td>${escapeHtml(r.userAnswer)}</td>
+        <td class="${r.isCorrect ? 'correct-status' : 'wrong-status'}">${r.isCorrect ? 'Correct' : 'Incorrect'}</td>
+        <td>${r.isCorrect ? '—' : escapeHtml(r.correctDisplay)}</td>
+      </tr>`;
+    }
+    for (let m of mcqResults) {
+      resultHtml += `<tr>
+        <td>${counter++}</td>
+        <td><strong>MCQ:</strong> ${escapeHtml(m.question)}</td>
+        <td>${escapeHtml(m.userAnswer)}</td>
+        <td class="${m.isCorrect ? 'correct-status' : 'wrong-status'}">${m.isCorrect ? 'Correct' : 'Incorrect'}</td>
+        <td>${m.isCorrect ? '—' : escapeHtml(m.correctAnswer)}</td>
+      </tr>`;
+    }
+    resultHtml += `</tbody></table></div>`;
+
+    const resultDiv = document.getElementById('resultArea');
+    resultDiv.innerHTML = resultHtml;
+    resultDiv.style.display = 'block';
+    window.scrollTo({ top: resultDiv.offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function resetToInitialState() {
+    document.getElementById('studentNameInput').value = '';
+    for (let i = 0; i < translationData.length; i++) {
+      const inp = document.getElementById(`trans_${i}`);
+      if (inp) inp.value = '';
+    }
+    for (let i = 0; i < mcqData.length; i++) {
+      const radios = document.getElementsByName(`mcq_${i}`);
+      radios.forEach(r => r.checked = false);
+    }
+    document.getElementById('testArea').style.display = 'none';
+    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('startPanel').style.display = 'block';
+  }
+
+  let isTestBuilt = false;
+  function startTest() {
+    const studentName = document.getElementById('studentNameInput').value.trim();
+    if (studentName === "") {
+      alert("Please enter your name before starting the test.");
+      return;
+    }
+    if (!isTestBuilt) {
+      buildTranslationUI();
+      buildMCQUI();
+      isTestBuilt = true;
+    }
+    document.getElementById('startPanel').style.display = 'none';
+    document.getElementById('testArea').style.display = 'block';
+    document.getElementById('resultArea').style.display = 'none';
+  }
+
+  document.getElementById('startTestBtn').addEventListener('click', startTest);
+  document.getElementById('submitBtn').addEventListener('click', computeAndShowResults);
+  document.getElementById('resetBtn').addEventListener('click', resetToInitialState);
+
+  document.getElementById('testArea').style.display = 'none';
+</script>
+</body>
+</html>
