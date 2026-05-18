@@ -2571,6 +2571,12 @@
       if (document.getElementById('adminPanel').classList.contains('active')) loadTestsAdmin();
     });
 
+    database.ref('vocabCards').once('value', snap => {
+      const existing = snap.val();
+      if (existing && existing.length > 0 && existing[0].title === 'Friend & Celebrity') {
+        database.ref('vocabCards').set([]);
+      }
+    });
     database.ref('vocabCards').on('value', snapshot => {
       globalVocabCards = snapshot.val() || [];
       loadVocabCards();
