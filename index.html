@@ -362,115 +362,94 @@
     .page-section { display: none; }
     .page-section.active { display: block; }
 
-    /* ───── VOCABULARY ───── */
-    .vocab-container {
-      background: #fff;
-      border-radius: 20px;
-      padding: 2rem;
-      border: 1.5px solid var(--border);
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .vocab-controls {
-      display: flex;
+    /* ───── VOCABULARY CARDS (small, like cartoon cards) ───── */
+    .vocab-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 168px);
+      gap: 1rem;
       justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .vocab-category {
-      padding: 0.5rem 1.2rem;
-      border: 1.5px solid var(--border);
-      border-radius: 50px;
-      background: #fff;
-      color: #666;
-      cursor: pointer;
-      font-weight: 500;
-      font-size: 0.85rem;
-      transition: all .2s;
-      font-family: inherit;
-    }
-
-    .vocab-category.active {
-      background: var(--purple);
-      color: #fff;
-      border-color: var(--purple);
     }
 
     .vocab-card {
-      background: var(--dark-bg);
-      color: var(--dark-text);
-      padding: 3rem 2rem;
-      border-radius: 20px;
-      text-align: center;
-      min-height: 250px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
       cursor: pointer;
-      transition: transform .6s;
-      transform-style: preserve-3d;
+      transition: transform .3s ease, box-shadow .3s ease;
+      border: 1.5px solid var(--border);
     }
 
-    .vocab-card.flipped { transform: rotateY(180deg); }
-
-    .vocab-word {
-      font-size: 2.5rem;
-      font-weight: 800;
-      font-family: 'Nunito', sans-serif;
+    .vocab-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,.10);
     }
 
-    .vocab-phonetic {
-      font-size: 1.1rem;
-      color: #a1a1a6;
-      margin-top: 0.25rem;
+    .vocab-thumb {
+      position: relative;
+      width: 168px;
+      height: 240px;
+      margin: 0 auto;
+      overflow: hidden;
+      background: #000;
     }
 
-    .vocab-meaning {
-      font-size: 1.2rem;
-      margin-top: 1rem;
-      display: none;
+    .vocab-thumb-img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 1;
     }
 
-    .vocab-card.flipped .vocab-meaning,
-    .vocab-card.flipped .vocab-example,
-    .vocab-card.flipped .vocab-synonym { display: block; }
-
-    .vocab-example {
-      font-style: italic;
-      color: #a1a1a6;
-      margin-top: 0.75rem;
-      display: none;
+    .vocab-thumb-img.blur-fit {
+      filter: blur(12px) brightness(0.6);
+      transform: scale(1.1);
     }
 
-    .vocab-synonym {
-      font-size: 0.85rem;
-      color: #6e6e73;
-      margin-top: 0.75rem;
-      display: none;
+    .vocab-thumb-img.perfect-fit {
+      filter: none;
+      object-fit: contain;
+      background: #000;
     }
 
-    .vocab-hint {
-      font-size: 0.8rem;
-      color: #6e6e73;
-      margin-top: 1.5rem;
+    .vocab-badge {
+      position: absolute;
+      top: 8px; left: 8px;
+      z-index: 2;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      line-height: 1.2;
     }
 
-    .vocab-nav {
-      display: flex;
-      justify-content: center;
-      gap: 0.75rem;
-      margin-top: 1.5rem;
+    .vocab-content {
+      padding: 0.7rem 0.8rem;
     }
 
-    .vocab-progress {
-      text-align: center;
-      margin-top: 1rem;
+    .vocab-content h3 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: .2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .vocab-content p {
       color: #666;
-      font-size: 0.85rem;
+      font-size: 0.65rem;
+      line-height: 1.3;
+    }
+
+    .vocab-added {
+      font-size: 0.6rem;
+      color: #666;
+      margin-top: .3rem;
+      opacity: .6;
     }
 
     /* ───── CARTOONS ───── */
@@ -1203,7 +1182,8 @@
 
       .cartoons-container { grid-template-columns: 1fr; }
 
-      .vocab-word { font-size: 2rem; }
+      .vocab-cards { grid-template-columns: 1fr; }
+      .vocab-thumb { width: 100%; height: auto; aspect-ratio: 168/240; }
     }
   </style>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -1277,30 +1257,13 @@
 
   <!-- VOCABULARY -->
   <section class="page-section" id="vocabulary" data-page="vocabulary">
-    <h2 class="section-title">Vocabulary</h2>
-    <p class="section-subtitle">Click the card to flip it and see the meaning.</p>
-    <div class="vocab-container">
-      <div class="vocab-controls">
-        <button class="vocab-category active" onclick="setVocabCategory('daily')">Daily Use</button>
-        <button class="vocab-category" onclick="setVocabCategory('ielts')">IELTS Words</button>
-        <button class="vocab-category" onclick="setVocabCategory('pte')">PTE Words</button>
-        <button class="vocab-category" onclick="setVocabCategory('business')">Business</button>
-        <button class="vocab-category" onclick="setVocabCategory('idioms')">Idioms</button>
-      </div>
-      <div class="vocab-card" id="vocabCard" onclick="flipCard()">
-        <div class="vocab-word" id="vocabWord">Abundant</div>
-        <div class="vocab-phonetic" id="vocabPhonetic">/əˈbʌndənt/</div>
-        <div class="vocab-meaning" id="vocabMeaning">Existing in large quantities; plentiful</div>
-        <div class="vocab-example" id="vocabExample">"The country has abundant natural resources."</div>
-        <div class="vocab-synonym" id="vocabSynonym">Synonyms: plentiful, copious, ample</div>
-        <div class="vocab-hint">Click to flip</div>
-      </div>
-      <div class="vocab-nav">
-        <button class="btn btn-primary" onclick="prevVocab()">Previous</button>
-        <button class="btn btn-secondary" onclick="speakWord()">🔊 Hear</button>
-        <button class="btn btn-primary" onclick="nextVocab()">Next</button>
-      </div>
-      <div class="vocab-progress" id="vocabProgress">Word 1 of 10</div>
+    <h2 class="section-title">Vocabulary Practice</h2>
+    <p class="section-subtitle">Choose a story card to test your vocabulary.</p>
+    <div class="vocab-cards" id="vocabCards"></div>
+    <div class="no-cartoons" id="noVocabCards" style="display:none;">
+      <div class="icon">📚</div>
+      <h3 style="margin-bottom:0.5rem;">No vocabulary cards yet</h3>
+      <p>Ask your teacher to add some.</p>
     </div>
   </section>
 
@@ -1479,6 +1442,41 @@
       <div class="admin-list">
         <h3>Your Tests (<span id="testCount">0</span>)</h3>
         <div id="adminTestList"></div>
+      </div>
+
+      <hr style="margin:2rem 0;border:none;border-top:1px solid var(--border);">
+
+      <div class="admin-form">
+        <h3 id="vocabFormTitle">Add New Vocabulary Card</h3>
+        <div class="form-group">
+          <label>Card Title</label>
+          <input type="text" id="vocabTitle" placeholder="e.g. Friend &amp; Celebrity">
+        </div>
+        <div class="form-group">
+          <label>Card Link URL</label>
+          <input type="text" id="vocabUrl" placeholder="e.g. Card 1.html or full URL">
+        </div>
+        <div class="form-group">
+          <label>Thumbnail Image URL</label>
+          <input type="text" id="vocabThumbnail" placeholder="https://example.com/thumbnail.jpg">
+        </div>
+        <div class="form-group">
+          <label>Badge Text (optional)</label>
+          <input type="text" id="vocabBadge" placeholder="e.g. 🏏 Cricket Star">
+        </div>
+        <div class="form-group">
+          <label>Description (optional)</label>
+          <input type="text" id="vocabDesc" placeholder="e.g. Words: knew, celebrity, conversation...">
+        </div>
+        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <button class="btn btn-success" id="vocabSubmitBtn" onclick="addVocabCard()">Add Card</button>
+          <button class="btn btn-ghost" id="cancelVocabEditBtn" onclick="cancelVocabEdit()" style="display:none;">Cancel Edit</button>
+        </div>
+      </div>
+
+      <div class="admin-list">
+        <h3>Your Vocabulary Cards (<span id="vocabCount">0</span>)</h3>
+        <div id="adminVocabList"></div>
       </div>
     </div>
   </section>
@@ -1700,116 +1698,164 @@
       closeMenu();
     }
 
-    // ====== VOCABULARY ======
-    const vocabData = {
-      daily: [
-        { word: 'Abundant', phonetic: '/əˈbʌndənt/', meaning: 'Existing in large quantities; plentiful', example: '"The country has abundant natural resources."', synonym: 'Synonyms: plentiful, copious, ample' },
-        { word: 'Benevolent', phonetic: '/bəˈnevələnt/', meaning: 'Well-meaning and kindly', example: '"She was a benevolent leader."', synonym: 'Synonyms: kind, generous, compassionate' },
-        { word: 'Comprehend', phonetic: '/ˌkɒmprɪˈhend/', meaning: 'To understand something fully', example: '"It is difficult to comprehend the size of the universe."', synonym: 'Synonyms: understand, grasp, perceive' },
-        { word: 'Diligent', phonetic: '/ˈdɪlɪdʒənt/', meaning: 'Having careful and persistent effort', example: '"She is a diligent student."', synonym: 'Synonyms: hardworking, industrious, dedicated' },
-        { word: 'Eloquent', phonetic: '/ˈeləkwənt/', meaning: 'Fluent and persuasive in speaking or writing', example: '"He gave an eloquent speech."', synonym: 'Synonyms: articulate, expressive, fluent' },
-        { word: 'Fluctuate', phonetic: '/ˈflʌktʃueɪt/', meaning: 'To rise and fall irregularly', example: '"Prices fluctuate based on supply and demand."', synonym: 'Synonyms: vary, change, oscillate' },
-        { word: 'Gratitude', phonetic: '/ˈɡrætɪtjuːd/', meaning: 'The quality of being thankful', example: '"She expressed gratitude for their support."', synonym: 'Synonyms: thankfulness, appreciation, thanks' },
-        { word: 'Hesitate', phonetic: '/ˈhezɪteɪt/', meaning: 'To pause before doing something due to uncertainty', example: '"Don\'t hesitate to ask if you need help."', synonym: 'Synonyms: pause, waver, delay' },
-        { word: 'Inevitable', phonetic: '/ɪnˈevɪtəbl/', meaning: 'Certain to happen; unavoidable', example: '"Change is inevitable in life."', synonym: 'Synonyms: unavoidable, certain, inescapable' },
-        { word: 'Jubilant', phonetic: '/ˈdʒuːbɪlənt/', meaning: 'Feeling or expressing great happiness', example: '"The team was jubilant after winning."', synonym: 'Synonyms: ecstatic, overjoyed, triumphant' }
-      ],
-      ielts: [
-        { word: 'Paradigm', phonetic: '/ˈpærədaɪm/', meaning: 'A typical example or pattern', example: '"The internet created a new paradigm."', synonym: 'Synonyms: model, pattern, framework' },
-        { word: 'Proliferate', phonetic: '/prəˈlɪfəreɪt/', meaning: 'To increase rapidly in number', example: '"Social media platforms have proliferated."', synonym: 'Synonyms: multiply, expand, boom' },
-        { word: 'Mitigate', phonetic: '/ˈmɪtɪɡeɪt/', meaning: 'To make something less severe', example: '"Governments are trying to mitigate pollution."', synonym: 'Synonyms: reduce, lessen, alleviate' },
-        { word: 'Ambiguous', phonetic: '/æmˈbɪɡjuəs/', meaning: 'Open to more than one interpretation', example: '"The instructions were ambiguous."', synonym: 'Synonyms: vague, unclear, uncertain' },
-        { word: 'Substantiate', phonetic: '/səbˈstænʃieɪt/', meaning: 'To provide evidence to support', example: '"Can you substantiate your claims?"', synonym: 'Synonyms: verify, confirm, prove' },
-        { word: 'Pragmatic', phonetic: '/præɡˈmætɪk/', meaning: 'Dealing with things practically', example: '"We need a pragmatic approach."', synonym: 'Synonyms: practical, realistic, sensible' },
-        { word: 'Corroborate', phonetic: '/kəˈrɒbəreɪt/', meaning: 'To confirm or give support to', example: '"The witness corroborated the story."', synonym: 'Synonyms: confirm, verify, validate' },
-        { word: 'Exacerbate', phonetic: '/ɪɡˈzæsəbeɪt/', meaning: 'To make a problem worse', example: '"His comments exacerbated the situation."', synonym: 'Synonyms: worsen, aggravate, intensify' },
-        { word: 'Ubiquitous', phonetic: '/juːˈbɪkwɪtəs/', meaning: 'Present everywhere', example: '"Smartphones are ubiquitous."', synonym: 'Synonyms: omnipresent, universal, widespread' },
-        { word: 'Conundrum', phonetic: '/kəˈnʌndrəm/', meaning: 'A confusing and difficult problem', example: '"The government faces a conundrum."', synonym: 'Synonyms: dilemma, puzzle, predicament' }
-      ],
-      pte: [
-        { word: 'Cognitive', phonetic: '/ˈkɒɡnɪtɪv/', meaning: 'Related to mental processes', example: '"Reading improves cognitive abilities."', synonym: 'Synonyms: mental, intellectual, cerebral' },
-        { word: 'Empirical', phonetic: '/ɪmˈpɪrɪkəl/', meaning: 'Based on observation or experience', example: '"The theory is supported by empirical evidence."', synonym: 'Synonyms: observational, experimental, factual' },
-        { word: 'Hypothesis', phonetic: '/haɪˈpɒθəsɪs/', meaning: 'A proposed explanation', example: '"The scientist tested her hypothesis."', synonym: 'Synonyms: theory, assumption, proposition' },
-        { word: 'Inherent', phonetic: '/ɪnˈhɪərənt/', meaning: 'Existing as a natural part', example: '"There are inherent risks."', synonym: 'Synonyms: intrinsic, built-in, essential' },
-        { word: 'Luminous', phonetic: '/ˈluːmɪnəs/', meaning: 'Giving off light; bright', example: '"The luminous stars lit up the sky."', synonym: 'Synonyms: glowing, radiant, brilliant' },
-        { word: 'Nominal', phonetic: '/ˈnɒmɪnl/', meaning: 'Very small; below real value', example: '"They charge a nominal fee."', synonym: 'Synonyms: minimal, token, small' },
-        { word: 'Obscure', phonetic: '/əbˈskjʊər/', meaning: 'Not discovered or known', example: '"The origin remains obscure."', synonym: 'Synonyms: unclear, vague, unknown' },
-        { word: 'Precarious', phonetic: '/prɪˈkeəriəs/', meaning: 'Not securely held; risky', example: '"He balanced in a precarious position."', synonym: 'Synonyms: unstable, risky, uncertain' },
-        { word: 'Resilient', phonetic: '/rɪˈzɪliənt/', meaning: 'Able to recover quickly', example: '"Children are remarkably resilient."', synonym: 'Synonyms: adaptable, flexible, strong' },
-        { word: 'Skeptical', phonetic: '/ˈskeptɪkəl/', meaning: 'Not easily convinced', example: '"She was skeptical about the policy."', synonym: 'Synonyms: doubtful, questioning, suspicious' }
-      ],
-      business: [
-        { word: 'Acquisition', phonetic: '/ˌækwɪˈzɪʃən/', meaning: 'The act of buying a company', example: '"The acquisition cost $50 million."', synonym: 'Synonyms: purchase, takeover, buyout' },
-        { word: 'Benchmark', phonetic: '/ˈbentʃmɑːk/', meaning: 'A standard point of reference', example: '"The company set a new benchmark."', synonym: 'Synonyms: standard, criterion, measure' },
-        { word: 'Commodity', phonetic: '/kəˈmɒdɪti/', meaning: 'A raw material or product', example: '"Oil is a valuable commodity."', synonym: 'Synonyms: product, good, resource' },
-        { word: 'Dividend', phonetic: '/ˈdɪvɪdend/', meaning: 'Money paid to shareholders', example: '"The company announced a 5% dividend."', synonym: 'Synonyms: payout, share, return' },
-        { word: 'Entrepreneur', phonetic: '/ˌɒntrəprəˈnɜːr/', meaning: 'A person who starts a business', example: '"She is a successful entrepreneur."', synonym: 'Synonyms: businessperson, founder, innovator' },
-        { word: 'Franchise', phonetic: '/ˈfræntʃaɪz/', meaning: 'A license to use a brand', example: '"He opened a McDonald\'s franchise."', synonym: 'Synonyms: license, dealership, branch' },
-        { word: 'Leverage', phonetic: '/ˈlevərɪdʒ/', meaning: 'To use to maximum advantage', example: '"We can leverage technology."', synonym: 'Synonyms: utilize, exploit, maximize' },
-        { word: 'Monopoly', phonetic: '/məˈnɒpəli/', meaning: 'Exclusive control of a market', example: '"The company has a monopoly."', synonym: 'Synonyms: dominance, control, exclusivity' },
-        { word: 'Negotiate', phonetic: '/nɪˈɡəʊʃieɪt/', meaning: 'To try to reach an agreement', example: '"They negotiated a better deal."', synonym: 'Synonyms: bargain, discuss, arrange' },
-        { word: 'Revenue', phonetic: '/ˈrevənjuː/', meaning: 'Income from operations', example: '"Revenue increased by 20%."', synonym: 'Synonyms: income, earnings, sales' }
-      ],
-      idioms: [
-        { word: 'Break the ice', phonetic: '', meaning: 'To start a conversation socially', example: '"He told a joke to break the ice."', synonym: 'Meaning: Initiate social interaction' },
-        { word: 'Hit the nail on the head', phonetic: '', meaning: 'To describe exactly what is causing something', example: '"You hit the nail on the head."', synonym: 'Meaning: To be exactly right' },
-        { word: 'Piece of cake', phonetic: '', meaning: 'Something very easy', example: '"The exam was a piece of cake."', synonym: 'Meaning: Very easy' },
-        { word: 'Under the weather', phonetic: '', meaning: 'Feeling slightly ill', example: '"I\'m feeling under the weather."', synonym: 'Meaning: Feeling sick' },
-        { word: 'Bite the bullet', phonetic: '', meaning: 'To face a difficult situation bravely', example: '"I decided to bite the bullet."', synonym: 'Meaning: Face difficulty courageously' },
-        { word: 'Cost an arm and a leg', phonetic: '', meaning: 'To be very expensive', example: '"That car cost an arm and a leg."', synonym: 'Meaning: Very costly' },
-        { word: 'Once in a blue moon', phonetic: '', meaning: 'Very rarely', example: '"I see him once in a blue moon."', synonym: 'Meaning: Very infrequently' },
-        { word: 'The ball is in your court', phonetic: '', meaning: 'It is your turn to decide', example: '"The ball is in your court now."', synonym: 'Meaning: It\'s your decision' },
-        { word: 'Burn the midnight oil', phonetic: '', meaning: 'To work late into the night', example: '"She burned the midnight oil."', synonym: 'Meaning: Work late at night' },
-        { word: 'Spill the beans', phonetic: '', meaning: 'To reveal a secret', example: '"He spilled the beans about the party."', synonym: 'Meaning: Reveal a secret' }
-      ]
-    };
+    // ====== VOCABULARY CARDS (Firebase-managed) ======
+    let globalVocabCards = [];
 
-    let currentVocabCategory = 'daily';
-    let currentVocabIndex = 0;
+    function getVocabCards() { return [...globalVocabCards]; }
+    function saveVocabCards(cards) { globalVocabCards = [...cards]; database.ref('vocabCards').set(cards); }
 
-    function setVocabCategory(category) {
-      currentVocabCategory = category;
-      currentVocabIndex = 0;
-      document.querySelectorAll('.vocab-category').forEach(btn => btn.classList.remove('active'));
-      if (event) event.target.classList.add('active');
-      updateVocabCard();
+    let editingVocabIndex = -1;
+    const vocabGradients = [
+      'linear-gradient(135deg,#667eea,#764ba2)',
+      'linear-gradient(135deg,#4facfe,#00f2fe)',
+      'linear-gradient(135deg,#f093fb,#f5576c)',
+      'linear-gradient(135deg,#43e97b,#38f9d7)',
+      'linear-gradient(135deg,#fa709a,#fee140)',
+      'linear-gradient(135deg,#a18cd1,#fbc2eb)',
+      'linear-gradient(135deg,#fccb90,#d57eeb)',
+      'linear-gradient(135deg,#e0c3fc,#8ec5fc)'
+    ];
+
+    function loadVocabCards() {
+      const cards = getVocabCards();
+      const container = document.getElementById('vocabCards');
+      const noMsg = document.getElementById('noVocabCards');
+
+      if (cards.length === 0) {
+        container.innerHTML = '';
+        noMsg.style.display = 'block';
+        return;
+      }
+
+      noMsg.style.display = 'none';
+      container.innerHTML = cards.map((card, i) => {
+        const bgGradient = vocabGradients[i % vocabGradients.length];
+        const imgSrc = card.thumbnail || null;
+        const badge = card.badge || '📖 Story';
+
+        let thumbContent = '';
+        if (imgSrc) {
+          thumbContent = `<img src="${imgSrc}" class="vocab-thumb-img" onload="checkImageFit(this)" onerror="this.parentNode.style.background='${bgGradient}';this.style.display='none'">`;
+        } else {
+          thumbContent = `<div style="width:100%;height:100%;background:${bgGradient};"></div>`;
+        }
+
+        return `
+          <div class="vocab-card" onclick="window.open('${card.url.replace(/'/g, "\\'")}', '_blank')">
+            <div class="vocab-thumb" style="background:${bgGradient};">
+              ${thumbContent}
+              <div class="vocab-badge">${badge}</div>
+            </div>
+            <div class="vocab-content">
+              <h3>${card.title}</h3>
+              <p>${card.description || 'Practice your vocabulary'}</p>
+              <div class="vocab-added">${card.extra || 'Vocabulary card'}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
-    function updateVocabCard() {
-      const vocab = vocabData[currentVocabCategory][currentVocabIndex];
-      document.getElementById('vocabWord').textContent = vocab.word;
-      document.getElementById('vocabPhonetic').textContent = vocab.phonetic;
-      document.getElementById('vocabMeaning').textContent = vocab.meaning;
-      document.getElementById('vocabExample').textContent = vocab.example;
-      document.getElementById('vocabSynonym').textContent = vocab.synonym;
-      document.getElementById('vocabProgress').textContent = `Word ${currentVocabIndex + 1} of ${vocabData[currentVocabCategory].length}`;
-      document.getElementById('vocabCard').classList.remove('flipped');
-    }
+    function loadVocabAdminList() {
+      const cards = getVocabCards();
+      const list = document.getElementById('adminVocabList');
+      document.getElementById('vocabCount').textContent = cards.length;
 
-    function flipCard() {
-      document.getElementById('vocabCard').classList.toggle('flipped');
-    }
-
-    function nextVocab() {
-      if (currentVocabIndex < vocabData[currentVocabCategory].length - 1) {
-        currentVocabIndex++;
-        updateVocabCard();
+      if (cards.length === 0) {
+        list.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:2rem;">No vocabulary cards added yet.</p>';
+      } else {
+        list.innerHTML = cards.map((c, i) => `
+          <div class="admin-cartoon-item">
+            <div class="admin-cartoon-info">
+              <h4>${c.title}</h4>
+              <span>${c.url.substring(0, 50)}${c.url.length > 50 ? '...' : ''}</span>
+            </div>
+            <div style="display:flex;gap:0.5rem;">
+              <button class="btn btn-ghost" onclick="editVocabCard(${i})" style="padding:0.5rem 1rem;font-size:0.8rem;">Edit</button>
+              <button class="btn btn-danger" onclick="deleteVocabCard(${i})" style="padding:0.5rem 1rem;font-size:0.8rem;">Delete</button>
+            </div>
+          </div>
+        `).join('');
       }
     }
 
-    function prevVocab() {
-      if (currentVocabIndex > 0) {
-        currentVocabIndex--;
-        updateVocabCard();
+    function addVocabCard() {
+      const title = document.getElementById('vocabTitle').value.trim();
+      const url = document.getElementById('vocabUrl').value.trim();
+      const thumbnail = document.getElementById('vocabThumbnail').value.trim();
+      const badge = document.getElementById('vocabBadge').value.trim();
+      const desc = document.getElementById('vocabDesc').value.trim();
+
+      if (!title || !url) { alert('Please fill in Title and Link URL!'); return; }
+
+      const cards = getVocabCards();
+
+      if (editingVocabIndex >= 0) {
+        cards[editingVocabIndex] = {
+          title, url,
+          thumbnail: thumbnail || null,
+          badge: badge || null,
+          description: desc || null
+        };
+        saveVocabCards(cards);
+        alert('Vocabulary card updated!');
+        cancelVocabEdit();
+      } else {
+        cards.unshift({
+          title, url,
+          thumbnail: thumbnail || null,
+          badge: badge || null,
+          description: desc || null,
+          extra: title
+        });
+        saveVocabCards(cards);
+        alert('Vocabulary card added!');
       }
+
+      loadVocabCards();
+      loadVocabAdminList();
+      document.getElementById('vocabTitle').value = '';
+      document.getElementById('vocabUrl').value = '';
+      document.getElementById('vocabThumbnail').value = '';
+      document.getElementById('vocabBadge').value = '';
+      document.getElementById('vocabDesc').value = '';
     }
 
-    function speakWord() {
-      const word = document.getElementById('vocabWord').textContent;
-      const utterance = new SpeechSynthesisUtterance(word);
-      utterance.lang = 'en-US';
-      utterance.rate = 0.8;
-      speechSynthesis.speak(utterance);
+    function editVocabCard(index) {
+      const cards = getVocabCards();
+      const card = cards[index];
+      document.getElementById('vocabTitle').value = card.title;
+      document.getElementById('vocabUrl').value = card.url;
+      document.getElementById('vocabThumbnail').value = card.thumbnail || '';
+      document.getElementById('vocabBadge').value = card.badge || '';
+      document.getElementById('vocabDesc').value = card.description || '';
+      editingVocabIndex = index;
+      document.getElementById('vocabFormTitle').textContent = 'Edit Vocabulary Card';
+      document.getElementById('vocabSubmitBtn').textContent = 'Update Card';
+      document.getElementById('cancelVocabEditBtn').style.display = 'inline-block';
+      document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function cancelVocabEdit() {
+      editingVocabIndex = -1;
+      document.getElementById('vocabTitle').value = '';
+      document.getElementById('vocabUrl').value = '';
+      document.getElementById('vocabThumbnail').value = '';
+      document.getElementById('vocabBadge').value = '';
+      document.getElementById('vocabDesc').value = '';
+      document.getElementById('vocabFormTitle').textContent = 'Add New Vocabulary Card';
+      document.getElementById('vocabSubmitBtn').textContent = 'Add Card';
+      document.getElementById('cancelVocabEditBtn').style.display = 'none';
+    }
+
+    function deleteVocabCard(index) {
+      if (confirm('Delete this vocabulary card?')) {
+        const cards = getVocabCards();
+        cards.splice(index, 1);
+        saveVocabCards(cards);
+        loadVocabCards();
+        loadVocabAdminList();
+      }
     }
 
     // ====== SPEAKING ======
@@ -2303,6 +2349,7 @@
       if (input === ADMIN_PASSWORD) {
         showPage('admin');
         loadAdminList();
+        loadVocabAdminList();
       } else if (input !== null) {
         alert('Wrong password!');
       }
@@ -2522,6 +2569,12 @@
       globalTests = snapshot.val() || [];
       loadTests();
       if (document.getElementById('adminPanel').classList.contains('active')) loadTestsAdmin();
+    });
+
+    database.ref('vocabCards').on('value', snapshot => {
+      globalVocabCards = snapshot.val() || [];
+      loadVocabCards();
+      if (document.getElementById('adminPanel').classList.contains('active')) loadVocabAdminList();
     });
 
     checkFirebaseStatus();
