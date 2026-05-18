@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juned Academy - Sugar & Health Vocabulary Test</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Segoe UI','Noto Sans Bengali',sans-serif;
+  background:#f3f5fb;
+  padding:25px;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  background:#fff;
+  border-radius:28px;
+  padding:30px;
+  box-shadow:0 10px 35px rgba(0,0,0,.06);
+}
+
+.logo{
+  font-size:2rem;
+  font-weight:800;
+}
+
+.logo span{
+  color:#e63946;
+}
+
+.tag{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 16px;
+  background:#eef2ff;
+  border-radius:40px;
+  font-size:.9rem;
+  font-weight:600;
+  color:#304ffe;
+}
+
+#startBox{
+  margin-top:25px;
+  background:#f8f9fc;
+  padding:25px;
+  border-radius:25px;
+}
+
+.textBox{
+  background:#fff;
+  padding:20px;
+  border-radius:18px;
+  border:1px solid #eee;
+  line-height:2;
+  font-size:1.05rem;
+  margin-bottom:20px;
+}
+
+input[type=text], input[type=password], textarea{
+  width:100%;
+  padding:14px 16px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  margin-top:12px;
+  font-size:1rem;
+}
+
+button{
+  border:none;
+  cursor:pointer;
+}
+
+.main-btn{
+  margin-top:15px;
+  width:100%;
+  padding:15px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#304ffe,#5c6cff);
+  color:#fff;
+  font-weight:700;
+}
+
+#quizArea{
+  display:none;
+}
+
+.question-card{
+  margin-top:20px;
+  padding:20px;
+  background:#fafbff;
+  border-radius:20px;
+  border:1px solid #eef0ff;
+}
+
+.question-title{
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.option-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.option input{
+  display:none;
+}
+
+.option label{
+  display:block;
+  padding:14px;
+  text-align:center;
+  border-radius:16px;
+  border:2px solid #e3e6ff;
+  background:#fff;
+  cursor:pointer;
+  font-weight:600;
+  transition:.2s;
+}
+
+.option input:checked + label{
+  background:#304ffe;
+  color:#fff;
+  border-color:#304ffe;
+  transform:scale(1.03);
+}
+
+#resultBox{
+  display:none;
+  margin-top:25px;
+  background:#f8f9fc;
+  padding:20px;
+  border-radius:20px;
+}
+
+.score{
+  font-size:1.8rem;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:15px;
+}
+
+.feedback{
+  background:#fff;
+  padding:15px;
+  margin-top:10px;
+  border-radius:15px;
+  border-left:5px solid #ddd;
+}
+
+.correct{ border-left-color:#2ecc71; }
+.wrong{ border-left-color:#e74c3c; }
+
+.adminBtn{
+  margin-top:40px;
+  text-align:center;
+  color:#777;
+  font-size:.9rem;
+  cursor:pointer;
+}
+
+#adminPanel{
+  display:none;
+  margin-top:20px;
+  background:#f8f9fc;
+  padding:20px;
+  border-radius:20px;
+}
+
+textarea{
+  min-height:200px;
+  margin-top:10px;
+}
+
+.small-btn{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:14px;
+  background:#111;
+  color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="logo">Juned <span>Academy</span></div>
+  <div class="tag">Vocabulary Test - Sugar & Health</div>
+
+  <div id="startBox">
+
+    <div class="textBox">
+আমরা অনেকেই চকলেট, আইসক্রিম বা কোল্ড ড্রিংকস খেতে খুব পছন্দ করি। কিন্তু অতিরিক্ত চিনি খাওয়া আমাদের স্বাস্থ্যের জন্য একটি বড় বিপদ ডেকে আনতে পারে। বেশি মিষ্টি খেলে আমাদের ওজন অনেক বেশি <b>increase (বৃদ্ধি পাওয়া)</b> করতে পারে।<br><br>
+তাহলে চিনি আমাদের বডিতে কী ক্ষতি করে, তা একটু <b>discuss (আলোচনা করা)</b> করা যাক।<br><br>
+অতিরিক্ত চিনি আমাদের দাঁতকে <b>damage (নষ্ট করা)</b> করে ফেলে, যার ফলে দাঁতে প্রচণ্ড ব্যথা হয়। তাছাড়া, এটি আমাদের শরীরের এনার্জি বা শক্তিকে খুব দ্রুত <b>reduce (কমিয়ে দেওয়া)</b> করে দেয়, যার কারণে আমরা সারাদিন অলসতা অনুভব করি।<br><br>
+ডাক্তাররা সবসময় মিষ্টি <b>meal (খাবার)</b> এড়িয়ে চলার <b>suggestion (পরামর্শ)</b> দেন। কারণ এটি ভবিষ্যতে আমাদের শরীরে বিভিন্ন কঠিন রোগ <b>create (তৈরি করা)</b> করতে পারে।<br><br>
+তাই আমাদের সবার উচিত চিনি খাওয়ার <b>habit (অভ্যাস)</b> নিয়ন্ত্রণ করা। আমরা চিনির বদলে মিষ্টি ফল খেতে পারি, যা আমাদের শরীরকে <b>healthy (সুস্থ)</b> রাখতে অনেক সাহায্য করবে।
+    </div>
+
+    <input type="text" id="studentName" placeholder="Enter your name">
+
+    <button class="main-btn" onclick="startTest()">Start Test</button>
+
+  </div>
+
+  <div id="quizArea"></div>
+  <div id="resultBox"></div>
+
+  <div class="adminBtn" onclick="openAdmin()">Admin</div>
+
+  <div id="adminPanel">
+    <input type="password" id="adminPass" placeholder="Password">
+    <button class="small-btn" onclick="unlockAdmin()">Unlock</button>
+    <div id="adminContent" style="display:none">
+      <textarea id="adminData">
+[
+{"word":"increase","meaning":"বৃদ্ধি পাওয়া"},
+{"word":"discuss","meaning":"আলোচনা করা"},
+{"word":"damage","meaning":"নষ্ট করা"},
+{"word":"reduce","meaning":"কমিয়ে দেওয়া"},
+{"word":"meal","meaning":"খাবার"},
+{"word":"suggestion","meaning":"পরামর্শ"},
+{"word":"create","meaning":"তৈরি করা"},
+{"word":"habit","meaning":"অভ্যাস"},
+{"word":"healthy","meaning":"সুস্থ"}
+]
+      </textarea>
+      <button class="small-btn" onclick="saveData()">Save</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+let data = [
+{"word":"increase","meaning":"বৃদ্ধি পাওয়া"},
+{"word":"discuss","meaning":"আলোচনা করা"},
+{"word":"damage","meaning":"নষ্ট করা"},
+{"word":"reduce","meaning":"কমিয়ে দেওয়া"},
+{"word":"meal","meaning":"খাবার"},
+{"word":"suggestion","meaning":"পরামর্শ"},
+{"word":"create","meaning":"তৈরি করা"},
+{"word":"habit","meaning":"অভ্যাস"},
+{"word":"healthy","meaning":"সুস্থ"}
+];
+
+// Confusing but clearly distinct distractors (same part of speech)
+function getDistractors(word, correctMeaning) {
+  const distractorMap = {
+    "increase": ["কমে যাওয়া", "স্থির থাকা", "অদৃশ্য হওয়া"],
+    "discuss": ["চুপ করা", "উপেক্ষা করা", "লুকানো"],
+    "damage": ["মেরামত করা", "সাজানো", "রক্ষা করা"],
+    "reduce": ["বাড়ানো", "দ্বিগুণ করা", "বিস্তৃত করা"],
+    "meal": ["পানি", "বাতাস", "ঘুম"],
+    "suggestion": ["অনুযোগ", "অবজ্ঞা", "উপহাস"],
+    "create": ["ধ্বংস করা", "অনুকরণ করা", "চুরি করা"],
+    "habit": ["একবারের কাজ", "অনিচ্ছা", "বিরক্তি"],
+    "healthy": ["অসুস্থ", "দুর্বল", "পচা"]
+  };
+  
+  if (distractorMap[word]) {
+    return [...distractorMap[word]];
+  }
+  
+  // Fallback
+  return ["অন্য অর্থ", "ভিন্ন অর্থ", "সম্পর্কহীন"];
+}
+
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startTest(){
+  if(document.getElementById("studentName").value.trim()===""){
+    alert("Enter name");
+    return;
+  }
+  buildQuiz();
+  document.getElementById("startBox").style.display="none";
+  document.getElementById("quizArea").style.display="block";
+}
+
+function buildQuiz(){
+  let html="";
+  data.forEach((q,i)=>{
+    let wrong = getDistractors(q.word, q.meaning);
+    wrong = wrong.filter(w => w !== q.meaning).slice(0,3);
+    while(wrong.length < 3) wrong.push("?");
+    let options = shuffle([q.meaning, ...wrong]);
+    html+=`
+    <div class="question-card">
+      <div class="question-title">${i+1}. "${q.word}" এর বাংলা অর্থ কী?</div>
+      <div class="option-grid">
+    `;
+    options.forEach((o,j)=>{
+      html+=`
+      <div class="option">
+        <input type="radio" name="q${i}" id="q${i}_${j}" value="${o}">
+        <label for="q${i}_${j}">${o}</label>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  html+=`<button class="main-btn" onclick="submitTest()">Submit</button>`;
+  document.getElementById("quizArea").innerHTML=html;
+}
+
+function submitTest(){
+  let score=0;
+  let html="";
+  data.forEach((q,i)=>{
+    let selected="";
+    document.getElementsByName("q"+i).forEach(r=>{
+      if(r.checked) selected=r.value;
+    });
+    let ok = selected===q.meaning;
+    if(ok) score++;
+    html+=`
+    <div class="feedback ${ok?'correct':'wrong'}">
+      <b>${q.word}</b><br>
+      Your: ${selected||"No answer"}<br>
+      Correct: ${q.meaning}
+    </div>`;
+  });
+  document.getElementById("resultBox").innerHTML=
+  `<div class="score">${score}/${data.length}</div>`+html;
+  document.getElementById("resultBox").style.display="block";
+}
+
+function openAdmin(){
+  document.getElementById("adminPanel").style.display="block";
+}
+
+function unlockAdmin(){
+  if(document.getElementById("adminPass").value==="juned2026"){
+    document.getElementById("adminContent").style.display="block";
+  }else alert("Wrong password");
+}
+
+function saveData(){
+  try{
+    data = JSON.parse(document.getElementById("adminData").value);
+    alert("Saved! (Distractors for new words can be added manually in the code's distractorMap)");
+  }catch(e){
+    alert("Error JSON");
+  }
+}
+
+</script>
+
+</body>
+</html>

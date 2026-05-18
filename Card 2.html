@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juned Academy - Blue Whale Vocabulary Test</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Segoe UI','Noto Sans Bengali',sans-serif;
+  background:#f3f5fb;
+  padding:25px;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  background:#fff;
+  border-radius:28px;
+  padding:30px;
+  box-shadow:0 10px 35px rgba(0,0,0,.06);
+}
+
+.logo{
+  font-size:2rem;
+  font-weight:800;
+}
+
+.logo span{
+  color:#e63946;
+}
+
+.tag{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 16px;
+  background:#eef2ff;
+  border-radius:40px;
+  font-size:.9rem;
+  font-weight:600;
+  color:#304ffe;
+}
+
+/* START SCREEN */
+#startBox{
+  margin-top:25px;
+  background:#f8f9fc;
+  padding:25px;
+  border-radius:25px;
+}
+
+.textBox{
+  background:#fff;
+  padding:20px;
+  border-radius:18px;
+  border:1px solid #eee;
+  line-height:2;
+  font-size:1.05rem;
+  margin-bottom:20px;
+}
+
+input[type=text], input[type=password], textarea{
+  width:100%;
+  padding:14px 16px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  margin-top:12px;
+  font-size:1rem;
+}
+
+button{
+  border:none;
+  cursor:pointer;
+}
+
+.main-btn{
+  margin-top:15px;
+  width:100%;
+  padding:15px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#304ffe,#5c6cff);
+  color:#fff;
+  font-weight:700;
+}
+
+/* TEST AREA */
+#quizArea{
+  display:none;
+}
+
+.question-card{
+  margin-top:20px;
+  padding:20px;
+  background:#fafbff;
+  border-radius:20px;
+  border:1px solid #eef0ff;
+}
+
+.question-title{
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.option-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.option input{
+  display:none;
+}
+
+.option label{
+  display:block;
+  padding:14px;
+  text-align:center;
+  border-radius:16px;
+  border:2px solid #e3e6ff;
+  background:#fff;
+  cursor:pointer;
+  font-weight:600;
+  transition:.2s;
+}
+
+.option input:checked + label{
+  background:#304ffe;
+  color:#fff;
+  border-color:#304ffe;
+  transform:scale(1.03);
+}
+
+/* RESULT */
+#resultBox{
+  display:none;
+  margin-top:25px;
+  background:#f8f9fc;
+  padding:20px;
+  border-radius:20px;
+}
+
+.score{
+  font-size:1.8rem;
+  font-weight:800;
+  text-align:center;
+  margin-bottom:15px;
+}
+
+.feedback{
+  background:#fff;
+  padding:15px;
+  margin-top:10px;
+  border-radius:15px;
+  border-left:5px solid #ddd;
+}
+
+.correct{ border-left-color:#2ecc71; }
+.wrong{ border-left-color:#e74c3c; }
+
+/* ADMIN BUTTON */
+.adminBtn{
+  margin-top:40px;
+  text-align:center;
+  color:#777;
+  font-size:.9rem;
+  cursor:pointer;
+}
+
+/* ADMIN POPUP */
+#adminPanel{
+  display:none;
+  margin-top:20px;
+  background:#f8f9fc;
+  padding:20px;
+  border-radius:20px;
+}
+
+textarea{
+  min-height:200px;
+  margin-top:10px;
+}
+
+.small-btn{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:14px;
+  background:#111;
+  color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="logo">Juned <span>Academy</span></div>
+  <div class="tag">Vocabulary Test - Blue Whale</div>
+
+  <!-- START PAGE -->
+  <div id="startBox">
+
+    <div class="textBox">
+একটি নীল তিমি একটি তিন তলা বাড়ির মতো <b>Big (বড়)</b> হতে পারে। এদের <b>tongue (জিভ)</b> একটি বিশাল হাতির সমান <b>heavy (ভারী)</b> হয়। তিমি কিন্তু <b>fish (মাছ)</b> নয়, তারা আমাদের মতো স্তন্যপায়ী প্রাণী। তারা ফুলকা দিয়ে শ্বাস নেয় না, মাথার ওপরের ছিদ্র দিয়ে বাতাস <b>breathe (শ্বাস নেওয়া)</b> করে।<br><br>
+তিমিরা সমুদ্রের নিচে সুন্দর <b>song (গান)</b> গেয়ে অন্য তিমিদের সাথে <b>communicate (যোগাযোগ করা)</b> করে। তাদের এই আওয়াজ শত শত মাইল দূর থেকেও অন্য তিমিরা <b>hear (শুনতে পাওয়া)</b> পারে।<br><br>
+তারা যখন <b>sleep (ঘুমানো)</b> করে, তখন তাদের অর্ধেক মস্তিষ্ক জেগে থাকে, যেন তারা পানিতে ডুবে যাওয়া <b>avoid (এড়িয়ে চলা)</b> করতে পারে। মা তিমিরা তাদের বাচ্চাদের <b>protect (রক্ষা করা)</b> করে অন্যান্য শত্রুদের থেকে।
+    </div>
+
+    <input type="text" id="studentName" placeholder="Enter your name">
+
+    <button class="main-btn" onclick="startTest()">Start Test</button>
+
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizArea"></div>
+
+  <!-- RESULT -->
+  <div id="resultBox"></div>
+
+  <!-- ADMIN -->
+  <div class="adminBtn" onclick="openAdmin()">Admin</div>
+
+  <div id="adminPanel">
+
+    <input type="password" id="adminPass" placeholder="Password">
+
+    <button class="small-btn" onclick="unlockAdmin()">Unlock</button>
+
+    <div id="adminContent" style="display:none">
+
+      <textarea id="adminData">
+[
+{"word":"Big","meaning":"বড়"},
+{"word":"tongue","meaning":"জিভ"},
+{"word":"heavy","meaning":"ভারী"},
+{"word":"fish","meaning":"মাছ"},
+{"word":"breathe","meaning":"শ্বাস নেওয়া"},
+{"word":"song","meaning":"গান"},
+{"word":"communicate","meaning":"যোগাযোগ করা"},
+{"word":"hear","meaning":"শুনতে পাওয়া"},
+{"word":"sleep","meaning":"ঘুমানো"},
+{"word":"avoid","meaning":"এড়িয়ে চলা"},
+{"word":"protect","meaning":"রক্ষা করা"}
+]
+      </textarea>
+
+      <button class="small-btn" onclick="saveData()">Save</button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+let data = [
+{"word":"Big","meaning":"বড়"},
+{"word":"tongue","meaning":"জিভ"},
+{"word":"heavy","meaning":"ভারী"},
+{"word":"fish","meaning":"মাছ"},
+{"word":"breathe","meaning":"শ্বাস নেওয়া"},
+{"word":"song","meaning":"গান"},
+{"word":"communicate","meaning":"যোগাযোগ করা"},
+{"word":"hear","meaning":"শুনতে পাওয়া"},
+{"word":"sleep","meaning":"ঘুমানো"},
+{"word":"avoid","meaning":"এড়িয়ে চলা"},
+{"word":"protect","meaning":"রক্ষা করা"}
+];
+
+let extra = ["খেলা","দৌড়ানো","লেখা","পড়া","গান","বন্ধু","শিক্ষক","খাবার","গাড়ি","ভ্রমণ","পানি","আকাশ","মাটি","ফুল","পাখি"];
+
+function startTest(){
+  if(document.getElementById("studentName").value.trim()===""){
+    alert("Enter name");
+    return;
+  }
+
+  buildQuiz();
+
+  document.getElementById("startBox").style.display="none";
+  document.getElementById("quizArea").style.display="block";
+}
+
+function shuffle(a){
+  return a.sort(()=>Math.random()-0.5);
+}
+
+function buildQuiz(){
+
+  let html="";
+
+  data.forEach((q,i)=>{
+
+    let wrong = shuffle(extra.filter(x=>x!==q.meaning)).slice(0,3);
+
+    let options = shuffle([q.meaning,...wrong]);
+
+    html+=`
+    <div class="question-card">
+      <div class="question-title">${i+1}. "${q.word}" এর বাংলা অর্থ কী?</div>
+
+      <div class="option-grid">
+    `;
+
+    options.forEach((o,j)=>{
+      html+=`
+      <div class="option">
+        <input type="radio" name="q${i}" id="q${i}_${j}" value="${o}">
+        <label for="q${i}_${j}">${o}</label>
+      </div>`;
+    });
+
+    html+=`</div></div>`;
+  });
+
+  html+=`<button class="main-btn" onclick="submitTest()">Submit</button>`;
+
+  document.getElementById("quizArea").innerHTML=html;
+}
+
+function submitTest(){
+
+  let score=0;
+  let html="";
+
+  data.forEach((q,i)=>{
+
+    let selected="";
+    document.getElementsByName("q"+i).forEach(r=>{
+      if(r.checked) selected=r.value;
+    });
+
+    let ok = selected===q.meaning;
+    if(ok) score++;
+
+    html+=`
+    <div class="feedback ${ok?'correct':'wrong'}">
+      <b>${q.word}</b><br>
+      Your: ${selected||"No answer"}<br>
+      Correct: ${q.meaning}
+    </div>`;
+  });
+
+  document.getElementById("resultBox").innerHTML=
+  `<div class="score">${score}/${data.length}</div>`+html;
+
+  document.getElementById("resultBox").style.display="block";
+}
+
+function openAdmin(){
+  document.getElementById("adminPanel").style.display="block";
+}
+
+function unlockAdmin(){
+  if(document.getElementById("adminPass").value==="juned2026"){
+    document.getElementById("adminContent").style.display="block";
+  }else alert("Wrong password");
+}
+
+function saveData(){
+  try{
+    data = JSON.parse(document.getElementById("adminData").value);
+    alert("Saved");
+  }catch(e){
+    alert("Error JSON");
+  }
+}
+
+</script>
+
+</body>
+</html>
