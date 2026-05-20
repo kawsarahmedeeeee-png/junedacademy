@@ -1801,7 +1801,7 @@
         alert('Vocabulary card updated!');
         cancelVocabEdit();
       } else {
-        cards.unshift({
+        cards.push({
           title, url,
           thumbnail: thumbnail || null,
           badge: badge || null,
@@ -2235,7 +2235,7 @@
       } else {
         const embedUrl = extractEmbedUrl(url);
         const note = embedUrl ? ' (will play on site)' : ' (will open in new tab)';
-        cartoons.unshift({
+        cartoons.push({
           title, url, thumbnail: thumbnail || null, level, description: desc,
           date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
         });
@@ -2300,7 +2300,7 @@
         alert('Test updated!');
         cancelTestEdit();
       } else {
-        tests.unshift({ title, url, level, description: desc });
+        tests.push({ title, url, level, description: desc });
         saveTests(tests);
         alert('Test added!');
       }
