@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Juned Academy - Want vs Want To</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Noto Sans Bengali', system-ui, sans-serif;
+            background: linear-gradient(145deg, #eef2ff 0%, #e0e7ff 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 48px;
+            padding: 28px 32px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .logo {
+            font-size: 2.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e2a5e, #304ffe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #e63946, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .tag {
+            display: inline-block;
+            margin-top: 8px;
+            margin-left: 12px;
+            padding: 6px 18px;
+            background: #ffe8e8;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #c44536;
+            vertical-align: middle;
+        }
+
+        .video-wrapper {
+            margin: 24px 0 18px;
+            border-radius: 32px;
+            overflow: hidden;
+            background: #e2e8f0;
+            aspect-ratio: 16 / 9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        #startBox {
+            margin-top: 20px;
+            background: #ffffffdd;
+            backdrop-filter: blur(4px);
+            padding: 24px;
+            border-radius: 32px;
+            border: 1px solid rgba(48, 79, 254, 0.2);
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 44px;
+            border: 2px solid #e2e8f0;
+            font-size: 1rem;
+            transition: 0.2s;
+            background: white;
+            font-weight: 500;
+        }
+
+        .name-input:focus {
+            border-color: #304ffe;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(48, 79, 254, 0.2);
+        }
+
+        .main-btn {
+            margin-top: 24px;
+            width: 100%;
+            padding: 16px;
+            border-radius: 60px;
+            background: linear-gradient(105deg, #304ffe, #5c6cff);
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 8px 18px rgba(48, 79, 254, 0.3);
+            text-transform: capitalize;
+        }
+
+        .main-btn:hover {
+            transform: scale(0.98);
+            background: linear-gradient(105deg, #283ed9, #4a5be0);
+            box-shadow: 0 4px 12px rgba(48, 79, 254, 0.4);
+        }
+
+        #quizArea {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 20px 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.03);
+            border: 1px solid #edf2ff;
+        }
+
+        .sentence-wrapper {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            row-gap: 12px;
+        }
+
+        .question-number {
+            font-weight: 700;
+            background: #304ffe10;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 1rem;
+            color: #304ffe;
+        }
+
+        .cool-dropdown {
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            border-radius: 60px;
+            padding: 10px 40px 10px 20px;  /* extra right padding for arrow */
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f172a;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+            font-family: inherit;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%23304ffe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            appearance: none;
+            -webkit-appearance: none;
+            min-width: 130px;
+            text-align: left;
+        }
+
+        .cool-dropdown:hover {
+            border-color: #304ffe;
+            background-color: #f5f7ff;
+        }
+
+        .cool-dropdown:focus {
+            border-color: #304ffe;
+            box-shadow: 0 0 0 3px rgba(48, 79, 254, 0.2);
+        }
+
+        #resultBox {
+            display: none;
+            margin-top: 30px;
+            background: #f9fafc;
+            border-radius: 32px;
+            padding: 24px;
+        }
+
+        .score {
+            font-size: 2rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b, #304ffe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 18px;
+        }
+
+        .feedback-item {
+            background: white;
+            padding: 14px 18px;
+            margin-top: 12px;
+            border-radius: 24px;
+            border-left: 8px solid;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .correct-feedback {
+            border-left-color: #2b9348;
+            background: #f0fff4;
+        }
+
+        .wrong-feedback {
+            border-left-color: #e63946;
+            background: #fff5f5;
+        }
+
+        .adminBtn {
+            margin-top: 45px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+            padding: 8px;
+        }
+
+        .adminBtn:hover {
+            color: #304ffe;
+        }
+
+        #adminPanel {
+            display: none;
+            margin-top: 20px;
+            background: #f1f5f9;
+            border-radius: 32px;
+            padding: 24px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 16px;
+            border-radius: 24px;
+            border: 1px solid #cbd5e1;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            background: #fff;
+        }
+
+        .small-btn {
+            width: 100%;
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 40px;
+            background: #0f172a;
+            color: white;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .small-btn:active {
+            transform: scale(0.97);
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 20px;
+            }
+            .sentence-wrapper {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .cool-dropdown {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <span class="logo">Juned <span>Academy</span></span>
+        <span class="tag">🎓 Want / Want to · Grammar Challenge</span>
+    </div>
+
+    <!-- START SCREEN -->
+    <div id="startBox">
+        <div id="videoContainer" class="video-wrapper">
+            <iframe id="lessonVideo" src="about:blank" title="Grammar video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <input type="text" id="studentName" class="name-input" placeholder="Enter your name">
+        <button class="main-btn" onclick="startTest()">Start Test</button>
+    </div>
+
+    <div id="quizArea"></div>
+    <div id="resultBox"></div>
+
+    <div class="adminBtn" onclick="toggleAdminPanel()">🔧 Admin Panel</div>
+    <div id="adminPanel">
+        <input type="password" id="adminPass" placeholder="Enter password" style="width:100%; padding:14px; border-radius:60px; border:1px solid #ccc; margin-bottom:12px;">
+        <button class="small-btn" onclick="unlockAdmin()">Unlock</button>
+        <div id="adminContent" style="display:none; margin-top:20px;">
+            <label style="font-weight:bold;">📺 Video Embed URL (YouTube / Facebook embed)</label>
+            <input type="text" id="videoLinkInput" style="width:100%; padding:12px; border-radius:60px; border:1px solid #ccc; margin-top:8px;" placeholder="https://www.youtube.com/embed/...">
+            <label style="font-weight:bold; margin-top:16px; display:block;">📝 Edit Questions (JSON)</label>
+            <textarea id="adminQuestionsData" rows="8"></textarea>
+            <button class="small-btn" onclick="saveVideoAndQuestions()">💾 Save Changes</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let questionsBank = [
+        { sentence: "I ________ walk", correct: "want to" },
+        { sentence: "I ________ coffee", correct: "want" },
+        { sentence: "you ________ an apple", correct: "want" },
+        { sentence: "they ________ make a video", correct: "want to" },
+        { sentence: "we ________ believe", correct: "want to" },
+        { sentence: "I ________ a chance", correct: "want" },
+        { sentence: "you ________ buy a bicycle", correct: "want to" },
+        { sentence: "they ________ the book", correct: "want" },
+        { sentence: "we ________ see the room", correct: "want to" },
+        { sentence: "I ________ your suggestion", correct: "want" },
+        { sentence: "He ________ win the match", correct: "wants to" },
+        { sentence: "She ________ a new dress", correct: "wants" },
+        { sentence: "He ________ some money", correct: "wants" },
+        { sentence: "She ________ create a bank account", correct: "wants to" },
+        { sentence: "Rafi ________ submit the homework", correct: "wants to" },
+        { sentence: "I ________ want to clean the room", correct: "don't" },
+        { sentence: "you ________ want my help", correct: "don't" },
+        { sentence: "he ________ want to play with me", correct: "doesn't" },
+        { sentence: "she ________ want the toy", correct: "doesn't" },
+        { sentence: "Marzia ________ want to do exercise", correct: "doesn't" }
+    ];
+
+    let currentVideoUrl = "";
+
+    function getOptionsForAnswer(correct) {
+        if (correct === "want" || correct === "want to") return ["want", "want to"];
+        if (correct === "wants" || correct === "wants to") return ["wants", "wants to"];
+        if (correct === "don't" || correct === "doesn't") return ["don't", "doesn't"];
+        return ["want", "want to"];
+    }
+
+    function buildQuiz() {
+        let html = `<div style="margin-bottom: 16px;"><span style="background:#304ffe20; padding:8px 20px; border-radius:40px;">📋 Choose the correct option</span></div>`;
+        questionsBank.forEach((q, idx) => {
+            const optionsList = getOptionsForAnswer(q.correct);
+            let dropdownId = `drop_${idx}`;
+            let optionTags = `<option value="" disabled selected>— Select —</option>`;
+            optionsList.forEach(opt => {
+                optionTags += `<option value="${opt}">${opt}</option>`;
+            });
+            let parts = q.sentence.split('________');
+            if (parts.length === 2) {
+                html += `
+                <div class="question-card">
+                    <div class="sentence-wrapper">
+                        <span class="question-number">${idx+1}.</span>
+                        <span>${parts[0]}</span>
+                        <select id="${dropdownId}" class="cool-dropdown">
+                            ${optionTags}
+                        </select>
+                        <span>${parts[1]}</span>
+                    </div>
+                </div>`;
+            } else {
+                html += `
+                <div class="question-card">
+                    <div class="sentence-wrapper">
+                        <span class="question-number">${idx+1}.</span>
+                        ${q.sentence} 
+                        <select id="${dropdownId}" class="cool-dropdown">
+                            ${optionTags}
+                        </select>
+                    </div>
+                </div>`;
+            }
+        });
+        html += `<button class="main-btn" onclick="submitTest()">Submit Test</button>`;
+        document.getElementById("quizArea").innerHTML = html;
+    }
+
+    function startTest() {
+        if (!document.getElementById("studentName").value.trim()) {
+            alert("Please enter your name");
+            return;
+        }
+        applyVideoToFrame();
+        document.getElementById("startBox").style.display = "none";
+        document.getElementById("quizArea").style.display = "block";
+        document.getElementById("resultBox").style.display = "none";
+        buildQuiz();
+    }
+
+    function applyVideoToFrame() {
+        let iframe = document.getElementById("lessonVideo");
+        if (iframe && currentVideoUrl && currentVideoUrl.trim() !== "") {
+            iframe.src = currentVideoUrl;
+        } else {
+            iframe.src = "about:blank";
+        }
+    }
+
+    function submitTest() {
+        let score = 0;
+        let resultHtml = "";
+        for (let i = 0; i < questionsBank.length; i++) {
+            let selectedElem = document.getElementById(`drop_${i}`);
+            let selectedVal = selectedElem ? selectedElem.value : "";
+            let correctAns = questionsBank[i].correct;
+            let isCorrect = (selectedVal === correctAns);
+            if (isCorrect) score++;
+            resultHtml += `
+                <div class="feedback-item ${isCorrect ? 'correct-feedback' : 'wrong-feedback'}">
+                    <strong>📝 ${i+1}. ${questionsBank[i].sentence}</strong><br>
+                    <span>👉 Your answer: <b>${selectedVal || "—"}</b></span><br>
+                    <span>✅ Correct: <b>${correctAns}</b></span>
+                </div>
+            `;
+        }
+        const name = document.getElementById("studentName").value;
+        const total = questionsBank.length;
+        const percent = Math.round((score/total)*100);
+        let praise = percent >= 80 ? "🎉 Excellent!" : (percent>=50 ? "👍 Good, keep practicing!" : "💪 Try again!");
+        document.getElementById("resultBox").innerHTML = `
+            <div class="score">🏆 ${name} — Score: ${score}/${total} (${percent}%)</div>
+            <div style="text-align:center; margin-bottom:12px;">${praise}</div>
+            ${resultHtml}
+            <button class="main-btn" style="margin-top:25px; background:#4b5563;" onclick="resetToStart()">🔄 Start Over</button>
+        `;
+        document.getElementById("resultBox").style.display = "block";
+        document.getElementById("quizArea").style.display = "none";
+    }
+
+    function resetToStart() {
+        document.getElementById("startBox").style.display = "block";
+        document.getElementById("quizArea").style.display = "none";
+        document.getElementById("resultBox").style.display = "none";
+        document.getElementById("studentName").value = "";
+    }
+
+    function toggleAdminPanel() {
+        let panel = document.getElementById("adminPanel");
+        panel.style.display = panel.style.display === "none" || panel.style.display === "" ? "block" : "none";
+        if (panel.style.display !== "block") {
+            document.getElementById("adminContent").style.display = "none";
+        }
+    }
+
+    function unlockAdmin() {
+        let pass = document.getElementById("adminPass").value;
+        if (pass === "juned2026") {
+            document.getElementById("adminContent").style.display = "block";
+            document.getElementById("videoLinkInput").value = currentVideoUrl;
+            document.getElementById("adminQuestionsData").value = JSON.stringify(questionsBank, null, 2);
+        } else {
+            alert("Wrong password");
+        }
+    }
+
+    function saveVideoAndQuestions() {
+        let newVideoUrl = document.getElementById("videoLinkInput").value.trim();
+        currentVideoUrl = newVideoUrl;
+        applyVideoToFrame();
+
+        try {
+            let newQuestions = JSON.parse(document.getElementById("adminQuestionsData").value);
+            if (Array.isArray(newQuestions) && newQuestions.length > 0) {
+                let valid = true;
+                for (let q of newQuestions) {
+                    if (!q.hasOwnProperty("sentence") || !q.hasOwnProperty("correct")) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) {
+                    questionsBank = newQuestions;
+                    alert("✅ Saved!");
+                    if (document.getElementById("quizArea").style.display === "block") buildQuiz();
+                } else {
+                    alert("❌ Each item needs 'sentence' and 'correct'.");
+                }
+            } else {
+                alert("❌ Must be a non-empty array.");
+            }
+        } catch(e) {
+            alert("JSON error: " + e.message);
+        }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+        applyVideoToFrame();
+        document.getElementById("adminPanel").style.display = "none";
+        document.getElementById("quizArea").style.display = "none";
+        document.getElementById("resultBox").style.display = "none";
+        document.getElementById("startBox").style.display = "block";
+    });
+</script>
+</body>
+</html>
