@@ -246,6 +246,16 @@
       color: #1e3c72;
     }
 
+    .fb-status {
+      text-align: center;
+      font-size: 0.75rem;
+      margin-top: 12px;
+      padding: 6px;
+      border-radius: 20px;
+    }
+    .fb-status.connected { color: #2b8c4a; }
+    .fb-status.disconnected { color: #dc3545; }
+
     #adminPanel {
       display: none;
       margin-top: 20px;
@@ -467,6 +477,7 @@
 
   <div id="resultArea" class="result-area"></div>
 
+  <div class="fb-status" id="fbStatus">Connecting to cloud...</div>
   <div class="adminBtn" onclick="toggleAdminPanel()">⚙ Admin Panel</div>
   <div id="adminPanel">
     <input type="password" id="adminPass" placeholder="Enter password" style="width:100%; padding:14px; border-radius:60px; border:1px solid #ccc; margin-bottom:12px;">
@@ -524,7 +535,7 @@
   const testRef = database.ref('testContent/test03');
 
   function loadFromFirebase() {
-    testRef.once('value').then(snap => {
+    testRef.on('value', snap => {
       const data = snap.val();
       if (data) {
         if (data.videoUrl) currentVideoUrl = data.videoUrl;
@@ -533,6 +544,8 @@
         }
         applyVideoToFrame();
       }
+    }, err => {
+      console.warn("Firebase load error:", err);
     });
   }
 
@@ -540,6 +553,19 @@
     testRef.set({
       videoUrl: currentVideoUrl,
       questions: translationData
+    });
+  }
+
+  function checkFirebaseConnection() {
+    const statusEl = document.getElementById('fbStatus');
+    database.ref('.info/connected').on('value', snap => {
+      if (snap.val() === true) {
+        statusEl.textContent = '☁️ Cloud connected — data saves automatically';
+        statusEl.className = 'fb-status connected';
+      } else {
+        statusEl.textContent = '⚠️ Not connected to cloud';
+        statusEl.className = 'fb-status disconnected';
+      }
     });
   }
 
@@ -730,6 +756,7 @@
   }
 
   window.addEventListener("DOMContentLoaded", () => {
+    checkFirebaseConnection();
     loadFromFirebase();
     document.getElementById("adminPanel").style.display = "none";
     document.getElementById("testArea").style.display = "none";
