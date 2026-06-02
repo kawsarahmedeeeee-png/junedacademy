@@ -470,8 +470,8 @@
     <input type="password" id="adminPass" placeholder="Enter password" style="width:100%; padding:14px; border-radius:60px; border:1px solid #ccc; margin-bottom:12px;">
     <button class="small-btn" onclick="unlockAdmin()">Unlock</button>
     <div id="adminContent" style="display:none; margin-top:20px;">
-      <label style="font-weight:bold;">📺 Video Embed URL</label>
-      <input type="text" id="videoLinkInput" style="width:100%; padding:12px; border-radius:60px; border:1px solid #ccc; margin-top:8px;" placeholder="https://www.youtube.com/embed/...">
+      <label style="font-weight:bold;">📺 Video URL (YouTube or embed link)</label>
+      <input type="text" id="videoLinkInput" style="width:100%; padding:12px; border-radius:60px; border:1px solid #ccc; margin-top:8px;" placeholder="https://www.youtube.com/watch?v=...">
       <label style="font-weight:bold; margin-top:16px; display:block;">📝 Edit Questions (JSON)</label>
       <textarea id="adminQuestionsData" rows="8"></textarea>
       <button class="small-btn" onclick="saveVideoAndQuestions()">💾 Save Changes</button>
@@ -541,10 +541,22 @@
     document.getElementById('translationQuestions').innerHTML = html;
   }
 
+  function extractEmbedUrl(url) {
+    url = url.trim();
+    const youtubeMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (youtubeMatch) return 'https://www.youtube.com/embed/' + youtubeMatch[1];
+    const shortsMatch = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+    if (shortsMatch) return 'https://www.youtube.com/embed/' + shortsMatch[1];
+    if (url.match(/^https?:\/\/.+\/embed\//i)) return url;
+    if (url.match(/\.(mp4|webm|ogg|mov)(\?.*)?$/i)) return url;
+    return null;
+  }
+
   function applyVideoToFrame() {
     let iframe = document.getElementById("lessonVideo");
     if (iframe && currentVideoUrl && currentVideoUrl.trim() !== "") {
-      iframe.src = currentVideoUrl;
+      const embedUrl = extractEmbedUrl(currentVideoUrl);
+      iframe.src = embedUrl || currentVideoUrl;
     } else {
       iframe.src = "about:blank";
     }
