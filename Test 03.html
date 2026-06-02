@@ -340,6 +340,8 @@
       th, td { font-size: 0.75rem; }
     }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 </head>
 <body>
 <div class="container">
@@ -506,6 +508,40 @@
   ];
 
   let currentVideoUrl = "";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBcC4AMbjnlq9pUTrKCp6q3b_G8fTDTyeQ",
+    authDomain: "junedacademy1-401db.firebaseapp.com",
+    databaseURL: "https://junedacademy1-401db-default-rtdb.firebaseio.com",
+    projectId: "junedacademy1-401db",
+    storageBucket: "junedacademy1-401db.firebasestorage.app",
+    messagingSenderId: "935964759908",
+    appId: "1:935964759908:web:c1a2f6188f6d55ef744c71"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  const testRef = database.ref('testContent/test03');
+
+  function loadFromFirebase() {
+    testRef.once('value').then(snap => {
+      const data = snap.val();
+      if (data) {
+        if (data.videoUrl) currentVideoUrl = data.videoUrl;
+        if (data.questions && Array.isArray(data.questions) && data.questions.length > 0) {
+          translationData = data.questions;
+        }
+        applyVideoToFrame();
+      }
+    });
+  }
+
+  function saveToFirebase() {
+    testRef.set({
+      videoUrl: currentVideoUrl,
+      questions: translationData
+    });
+  }
 
   function wordSet(str) {
     return new Set(str.toLowerCase().match(/\b\w+\b/g) || []);
@@ -679,7 +715,8 @@
         }
         if (valid) {
           translationData = newQuestions;
-          alert("✅ Saved!");
+          saveToFirebase();
+          alert("✅ Saved to cloud!");
           if (document.getElementById("testArea").style.display === "block") buildTranslationUI();
         } else {
           alert("❌ Each item needs 'bengali' and 'required' array.");
@@ -693,7 +730,7 @@
   }
 
   window.addEventListener("DOMContentLoaded", () => {
-    applyVideoToFrame();
+    loadFromFirebase();
     document.getElementById("adminPanel").style.display = "none";
     document.getElementById("testArea").style.display = "none";
     document.getElementById("resultArea").style.display = "none";
