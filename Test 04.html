@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Juned Academy – Like vs Like To</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #f1f2f6;
+      font-family: 'Segoe UI', 'Roboto', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 30px 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      padding: 30px 28px;
+    }
+
+    .logo-area {
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .academy-logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1e1e2a;
+      letter-spacing: -0.5px;
+    }
+    .academy-logo span {
+      color: #dc3545;
+    }
+    .test-title {
+      display: inline-block;
+      background: #f1f3f5;
+      padding: 5px 18px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #dc3545;
+      margin-top: 8px;
+      letter-spacing: 0.3px;
+      border: 1px solid #e9ecef;
+    }
+
+    .video-wrapper {
+      margin: 20px 0 18px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #e2e8f0;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .start-panel {
+      background: #f8f9fa;
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .name-label {
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .name-input {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: 50px;
+      background: white;
+      transition: 0.2s;
+      font-family: inherit;
+      margin-bottom: 24px;
+    }
+    .name-input:focus {
+      border-color: #1e3c72;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(30, 60, 114, 0.1);
+    }
+
+    .btn-start, .btn-submit, .reset-btn {
+      border-radius: .25rem;
+      text-transform: uppercase;
+      font-style: normal;
+      font-weight: 600;
+      padding: 0 25px;
+      color: #fff;
+      -webkit-clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+      clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+      height: 48px;
+      font-size: 0.85rem;
+      line-height: 14px;
+      letter-spacing: 1.2px;
+      transition: .2s .1s;
+      background-image: linear-gradient(90deg, #1e3c72, #2b4f8c);
+      border: 0 solid;
+      overflow: hidden;
+      width: 100%;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .btn-start:hover, .btn-submit:hover, .reset-btn:hover {
+      cursor: pointer;
+      transition: all .3s ease-in;
+      padding-right: 35px;
+      padding-left: 35px;
+      background-image: linear-gradient(90deg, #163156, #1f3e6e);
+    }
+
+    .test-area {
+      display: none;
+    }
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 28px 0 18px 0;
+      padding-left: 6px;
+      border-left: 4px solid #1e3c72;
+      color: #212529;
+    }
+    .question-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      border: 1px solid #edf2f7;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .question-text {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #6c757d;
+      margin-bottom: 8px;
+    }
+    .bengali-text {
+      font-size: 1.3rem;
+      font-weight: 500;
+      background: #f8f9fa;
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 40px;
+      margin: 8px 0 14px 0;
+      font-family: 'Noto Sans Bengali', sans-serif;
+      color: #212529;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px 18px;
+      font-size: 0.95rem;
+      border: 1px solid #dee2e6;
+      border-radius: 50px;
+      margin-top: 6px;
+      font-family: inherit;
+      background: #fff;
+    }
+    input:focus, select:focus {
+      border-color: #1e3c72;
+      outline: none;
+    }
+
+    .result-area {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 20px;
+      margin-top: 28px;
+      border: 1px solid #e9ecef;
+      display: none;
+    }
+    .student-header {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #212529;
+      background: #f8f9fa;
+      padding: 12px 18px;
+      border-radius: 60px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .student-header span {
+      color: #1e3c72;
+    }
+    .score-badge {
+      font-size: 1.7rem;
+      font-weight: 700;
+      text-align: center;
+      background: #212529;
+      color: white;
+      padding: 18px;
+      border-radius: 60px;
+      margin-bottom: 24px;
+    }
+    .details-table {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th, td {
+      border: 1px solid #dee2e6;
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: top;
+      background: white;
+    }
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    .correct-status { color: #2b8c4a; font-weight: 600; }
+    .wrong-status { color: #dc3545; font-weight: 600; }
+
+    .adminBtn {
+      margin-top: 45px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+      padding: 8px;
+    }
+    .adminBtn:hover {
+      color: #1e3c72;
+    }
+
+    .fb-status {
+      text-align: center;
+      font-size: 0.75rem;
+      margin-top: 12px;
+      padding: 6px;
+      border-radius: 20px;
+    }
+    .fb-status.connected { color: #2b8c4a; }
+    .fb-status.disconnected { color: #dc3545; }
+
+    #adminPanel {
+      display: none;
+      margin-top: 20px;
+      background: #f1f5f9;
+      border-radius: 32px;
+      padding: 24px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 16px;
+      border-radius: 24px;
+      border: 1px solid #cbd5e1;
+      font-family: monospace;
+      font-size: 0.9rem;
+      margin-top: 12px;
+      background: #fff;
+    }
+
+    .small-btn {
+      width: 100%;
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 40px;
+      background: #0f172a;
+      color: white;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: 0.1s;
+    }
+
+    .small-btn:active {
+      transform: scale(0.97);
+    }
+
+    .description-area {
+      background: #fefefe;
+      border: 1px solid #e9ecef;
+      border-radius: 20px;
+      padding: 18px 22px;
+      margin: 20px 0 16px 0;
+      font-size: 0.88rem;
+      color: #212529;
+      line-height: 1.8;
+    }
+
+    .description-area .desc-title {
+      font-weight: 700;
+      color: #dc3545;
+      font-size: 0.95rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .description-area .section-label {
+      font-weight: 700;
+      color: #1e3c72;
+      display: block;
+      margin-top: 14px;
+      margin-bottom: 4px;
+    }
+
+    .description-area .section-label.center {
+      text-align: center;
+    }
+
+    .description-area .ex-label {
+      font-weight: 600;
+      color: #6c757d;
+      font-style: italic;
+      display: block;
+      margin-top: 6px;
+      margin-bottom: 2px;
+    }
+
+    .description-area .rule-line {
+      display: block;
+      padding-left: 12px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 0.7rem;
+      color: #adb5bd;
+    }
+
+    @media (max-width: 680px) {
+      .container { padding: 20px; }
+      .bengali-text { font-size: 1.1rem; }
+      th, td { font-size: 0.75rem; }
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="logo-area">
+    <div class="academy-logo">Juned <span>Academy</span></div>
+    <div class="test-title">Like vs Like To – Grammar Test</div>
+  </div>
+
+  <div id="startPanel" class="start-panel">
+    <div id="videoContainer" class="video-wrapper">
+      <iframe id="lessonVideo" src="about:blank" title="Grammar video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="description-area">
+      <span class="desc-title">📖 Like vs Like To — বাংলা অর্থসহ ব্যাখ্যা</span>
+
+      <span class="rule-line">Like = পছন্দ করা</span>
+      <span class="rule-line">Like to = করা পছন্দ করা</span>
+
+      <span class="section-label center">Use of like:</span>
+      <span class="section-label">Positive Sentences</span>
+      <span class="rule-line">I like = আমি পছন্দ করি</span>
+      <span class="rule-line">You like = তুমি পছন্দ কর</span>
+      <span class="rule-line">We like = আমরা পছন্দ করি</span>
+      <span class="rule-line">They like = তারা পছন্দ করে</span>
+
+      <span class="ex-label">Ex-</span>
+      <span class="rule-line">I like mangoes</span>
+      <span class="rule-line">You like this song</span>
+      <span class="rule-line">We like the new teacher</span>
+      <span class="rule-line">They like spicy food</span>
+
+      <span class="section-label">Negative Sentence</span>
+      <span class="rule-line">I don't like = আমি পছন্দ করি না</span>
+      <span class="rule-line">You don't like = তুমি পছন্দ কর না</span>
+      <span class="rule-line">We don't like = আমরা পছন্দ করি না</span>
+      <span class="rule-line">They don't like = তারা পছন্দ করে না</span>
+
+      <span class="ex-label">Ex-</span>
+      <span class="rule-line">I don't like cold weather</span>
+      <span class="rule-line">You don't like this movie</span>
+      <span class="rule-line">We don't like waiting</span>
+      <span class="rule-line">They don't like vegetables</span>
+
+      <span class="section-label">Question Sentences</span>
+      <span class="rule-line">Do I like = আমি কি পছন্দ করি?</span>
+      <span class="rule-line">Do you like = তুমি কি পছন্দ কর?</span>
+      <span class="rule-line">Do we like = আমরা কি পছন্দ করি?</span>
+      <span class="rule-line">Do they like = তারা কি পছন্দ করে?</span>
+
+      <span class="ex-label">Ex-</span>
+      <span class="rule-line">Do I like coffee?</span>
+      <span class="rule-line">Do you like my dress?</span>
+      <span class="rule-line">Do we like the plan?</span>
+      <span class="rule-line">Do they like the new house?</span>
+
+      <span class="section-label">Third person singular number:</span>
+      <span class="rule-line">He likes = সে পছন্দ করে</span>
+      <span class="rule-line">She likes = সে পছন্দ করে</span>
+      <span class="rule-line">Rahim likes = রহিম পছন্দ করে</span>
+      <span class="rule-line">It likes = এটি পছন্দ করে</span>
+
+      <span class="ex-label">Ex-</span>
+      <span class="rule-line">He likes cricket</span>
+      <span class="rule-line">She likes flowers</span>
+      <span class="rule-line">Rahim likes reading books</span>
+      <span class="rule-line">The cat likes milk</span>
+
+      <span class="section-label center">Use of like to:</span>
+      <span class="section-label">Positive Sentences</span>
+      <span class="rule-line">I like to = আমি করতে পছন্দ করি</span>
+      <span class="rule-line">You like to = তুমি করতে পছন্দ কর</span>
+      <span class="rule-line">We like to = আমরা করতে পছন্দ করি</span>
+      <span class="rule-line">They like to = তারা করতে পছন্দ করে</span>
+      <span class="rule-line">He/She likes to = সে করতে পছন্দ করে</span>
+      <span class="rule-line">Everyone likes to = সবার করতে পছন্দ</span>
+
+      <span class="ex-label">Ex-</span>
+      <span class="rule-line">I like to swim in the morning</span>
+      <span class="rule-line">You like to play football</span>
+      <span class="rule-line">He likes to watch movies at night</span>
+      <span class="rule-line">She likes to sing in the shower</span>
+      <span class="rule-line">We like to travel together</span>
+      <span class="rule-line">They like to eat out on weekends</span>
+
+      <span class="section-label">Negative Sentence</span>
+      <span class="rule-line">I don't like to = আমি করতে পছন্দ করি না</span>
+      <span class="rule-line">He doesn't like to = সে করতে পছন্দ করে না</span>
+      <span class="rule-line">She doesn't like to = সে করতে পছন্দ করে না</span>
+
+      <span class="ex-label">Ex-</span>
+      <span class="rule-line">I don't like to wake up early</span>
+      <span class="rule-line">He doesn't like to do homework</span>
+      <span class="rule-line">She doesn't like to eat fish</span>
+
+      <span class="section-label">Question Sentences</span>
+      <span class="rule-line">Do I like to = আমি কি করতে পছন্দ করি?</span>
+      <span class="rule-line">Does he like to = সে কি করতে পছন্দ করে?</span>
+      <span class="rule-line">Does she like to = সে কি করতে পছন্দ করে?</span>
+
+      <span class="ex-label">Ex-</span>
+      <span class="rule-line">Do you like to read novels?</span>
+      <span class="rule-line">Does he like to play chess?</span>
+      <span class="rule-line">Does she like to cook?</span>
+    </div>
+    <div class="name-label">Enter your full name to begin</div>
+    <input type="text" id="studentNameInput" class="name-input" placeholder="e.g., Rahim Uddin" autocomplete="off">
+    <button id="startTestBtn" class="btn-start">Start Test</button>
+  </div>
+
+  <div id="testArea" class="test-area">
+    <div class="section-title">Translate into English</div>
+    <div id="translationQuestions"></div>
+    <button id="submitBtn" class="btn-submit">Submit & Get Score</button>
+    <button id="resetBtn" class="reset-btn">Start Over</button>
+  </div>
+
+  <div id="resultArea" class="result-area"></div>
+
+  <div class="fb-status" id="fbStatus">Connecting to cloud...</div>
+  <div class="adminBtn" onclick="toggleAdminPanel()">⚙ Admin Panel</div>
+  <div id="adminPanel">
+    <input type="password" id="adminPass" placeholder="Enter password" style="width:100%; padding:14px; border-radius:60px; border:1px solid #ccc; margin-bottom:12px;">
+    <button class="small-btn" onclick="unlockAdmin()">Unlock</button>
+    <div id="adminContent" style="display:none; margin-top:20px;">
+      <label style="font-weight:bold;">📺 Video URL (YouTube or embed link)</label>
+      <input type="text" id="videoLinkInput" style="width:100%; padding:12px; border-radius:60px; border:1px solid #ccc; margin-top:8px;" placeholder="https://www.youtube.com/watch?v=...">
+      <label style="font-weight:bold; margin-top:16px; display:block;">📝 Edit Questions (JSON)</label>
+      <textarea id="adminQuestionsData" rows="8"></textarea>
+      <button class="small-btn" onclick="saveVideoAndQuestions()">💾 Save Changes</button>
+    </div>
+  </div>
+
+  <footer>Juned Academy — precise & modern practice tests</footer>
+</div>
+
+<script>
+  let translationData = [
+    { bengali: "আমি আম পছন্দ করি।", correct: "I like mangoes", patterns: [["like", "mangoes"]] },
+    { bengali: "সে সাঁতার কাটতে পছন্দ করে।", correct: "He likes to swim", patterns: [["likes", "to", "swim"]] },
+    { bengali: "তুমি কি কফি পছন্দ কর?", correct: "Do you like coffee", patterns: [["do", "like", "coffee"]] },
+    { bengali: "রহিম বই পড়তে পছন্দ করে।", correct: "Rahim likes to read", patterns: [["rahim", "likes", "to", "read"], ["rahim", "likes", "reading"]] },
+    { bengali: "আমরা ভ্রমণ করতে পছন্দ করি।", correct: "We like to travel", patterns: [["like", "to", "travel"]] },
+    { bengali: "সে ফুল পছন্দ করে।", correct: "She likes flowers", patterns: [["likes", "flowers"]] },
+    { bengali: "আমি সকালে ঘুম থেকে উঠতে পছন্দ করি না।", correct: "I don't like to wake up early", patterns: [["don't", "like", "to", "wake", "up"], ["don't", "like", "waking", "up"]] },
+    { bengali: "তোমার কি গল্পের বই পড়তে পছন্দ?", correct: "Do you like to read story books", patterns: [["do", "like", "to", "read"]] },
+    { bengali: "বিড়ালটি দুধ পছন্দ করে।", correct: "The cat likes milk", patterns: [["cat", "likes", "milk"]] },
+    { bengali: "আমরা নতুন শিক্ষককে পছন্দ করি।", correct: "We like the new teacher", patterns: [["like", "new", "teacher"]] },
+    { bengali: "সে দাবা খেলতে পছন্দ করে না।", correct: "He doesn't like to play chess", patterns: [["doesn't", "like", "to", "play", "chess"]] },
+    { bengali: "তারা মশলাদার খাবার পছন্দ করে।", correct: "They like spicy food", patterns: [["like", "spicy", "food"]] },
+    { bengali: "সে রান্না করতে পছন্দ করে?", correct: "Does she like to cook", patterns: [["does", "like", "to", "cook"]] },
+    { bengali: "আমি ঠাণ্ডা আবহাওয়া পছন্দ করি না।", correct: "I don't like cold weather", patterns: [["don't", "like", "cold", "weather"]] },
+    { bengali: "সে রাতে সিনেমা দেখতে পছন্দ করে।", correct: "He likes to watch movies at night", patterns: [["likes", "to", "watch", "movies", "night"], ["at", "night", "likes", "to", "watch", "movies"]] },
+    { bengali: "তারা কি নতুন বাড়ি পছন্দ করে?", correct: "Do they like the new house", patterns: [["do", "like", "new", "house"]] },
+    { bengali: "সবাই ছুটি কাটাতে পছন্দ করে।", correct: "Everyone likes to enjoy vacation", patterns: [["everyone", "likes", "to", "enjoy"]] },
+    { bengali: "আমি ফুটবল খেলতে পছন্দ করি।", correct: "I like to play football", patterns: [["like", "to", "play", "football"]] },
+    { bengali: "সে কি গান গাইতে পছন্দ করে?", correct: "Does she like to sing", patterns: [["does", "like", "to", "sing"]] },
+    { bengali: "তোমার বন্ধু কি গিটার বাজাতে পছন্দ করে?", correct: "Does your friend like to play guitar", patterns: [["does", "like", "to", "play", "guitar"]] }
+  ];
+
+  let currentVideoUrl = "";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBcC4AMbjnlq9pUTrKCp6q3b_G8fTDTyeQ",
+    authDomain: "junedacademy1-401db.firebaseapp.com",
+    databaseURL: "https://junedacademy1-401db-default-rtdb.firebaseio.com",
+    projectId: "junedacademy1-401db",
+    storageBucket: "junedacademy1-401db.firebasestorage.app",
+    messagingSenderId: "935964759908",
+    appId: "1:935964759908:web:c1a2f6188f6d55ef744c71"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+  const testRef = database.ref('testContent/test04');
+
+  function loadFromFirebase() {
+    testRef.on('value', snap => {
+      const data = snap.val();
+      if (data) {
+        if (data.videoUrl) currentVideoUrl = data.videoUrl;
+        if (data.questions && Array.isArray(data.questions) && data.questions.length > 0) {
+          translationData = data.questions;
+        }
+        applyVideoToFrame();
+      }
+    }, err => {
+      console.warn("Firebase load error:", err);
+    });
+  }
+
+  function saveToFirebase() {
+    testRef.set({
+      videoUrl: currentVideoUrl,
+      questions: translationData
+    });
+  }
+
+  function checkFirebaseConnection() {
+    const statusEl = document.getElementById('fbStatus');
+    database.ref('.info/connected').on('value', snap => {
+      if (snap.val() === true) {
+        statusEl.textContent = '☁️ Cloud connected — data saves automatically';
+        statusEl.className = 'fb-status connected';
+      } else {
+        statusEl.textContent = '⚠️ Not connected to cloud';
+        statusEl.className = 'fb-status disconnected';
+      }
+    });
+  }
+
+  function normalizeWords(str) {
+    return str.toLowerCase()
+      .replace(/[^\w\s']/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length > 0);
+  }
+
+  function matchesPattern(words, pattern) {
+    let pi = 0;
+    for (const w of words) {
+      if (pi < pattern.length && w === pattern[pi]) {
+        pi++;
+      }
+    }
+    return pi === pattern.length;
+  }
+
+  function isTranslationCorrect(userAnswer, patterns) {
+    if (!patterns || patterns.length === 0) return false;
+    const words = normalizeWords(userAnswer);
+    return patterns.some(p => matchesPattern(words, p));
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  function buildTranslationUI() {
+    let html = '';
+    translationData.forEach((item, idx) => {
+      html += `
+        <div class="question-card">
+          <div class="question-text">Question ${idx+1}</div>
+          <div class="bengali-text">${item.bengali}</div>
+          <input type="text" id="trans_${idx}" class="trans-input" placeholder="Write English translation here..." autocomplete="off">
+        </div>
+      `;
+    });
+    document.getElementById('translationQuestions').innerHTML = html;
+  }
+
+  function extractEmbedUrl(url) {
+    url = url.trim();
+    const youtubeMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (youtubeMatch) return 'https://www.youtube.com/embed/' + youtubeMatch[1];
+    const shortsMatch = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+    if (shortsMatch) return 'https://www.youtube.com/embed/' + shortsMatch[1];
+    if (url.match(/^https?:\/\/.+\/embed\//i)) return url;
+    if (url.match(/\.(mp4|webm|ogg|mov)(\?.*)?$/i)) return url;
+    return null;
+  }
+
+  function applyVideoToFrame() {
+    let iframe = document.getElementById("lessonVideo");
+    if (iframe && currentVideoUrl && currentVideoUrl.trim() !== "") {
+      const embedUrl = extractEmbedUrl(currentVideoUrl);
+      iframe.src = embedUrl || currentVideoUrl;
+    } else {
+      iframe.src = "about:blank";
+    }
+  }
+
+  function startTest() {
+    const studentName = document.getElementById('studentNameInput').value.trim();
+    if (studentName === "") {
+      alert("Please enter your name before starting the test.");
+      return;
+    }
+    applyVideoToFrame();
+    buildTranslationUI();
+    document.getElementById('startPanel').style.display = 'none';
+    document.getElementById('testArea').style.display = 'block';
+    document.getElementById('resultArea').style.display = 'none';
+  }
+
+  function computeAndShowResults() {
+    const studentName = document.getElementById('studentNameInput').value.trim();
+    const displayName = studentName === "" ? "Anonymous Student" : studentName;
+
+    let transResults = [];
+    for (let i = 0; i < translationData.length; i++) {
+      const userAns = document.getElementById(`trans_${i}`)?.value || "";
+      const q = translationData[i];
+      const isCorrect = isTranslationCorrect(userAns, q.patterns);
+      transResults.push({
+        bengali: q.bengali,
+        userAnswer: userAns === "" ? "(no answer)" : userAns,
+        isCorrect,
+        correct: q.correct || ""
+      });
+    }
+
+    const totalCorrect = transResults.filter(r => r.isCorrect).length;
+    const totalQuestions = transResults.length;
+    const percent = Math.round((totalCorrect / totalQuestions) * 100);
+
+    let resultHtml = `
+      <div class="student-header">Student: <span>${escapeHtml(displayName)}</span></div>
+      <div class="score-badge">
+        Score: ${totalCorrect} / ${totalQuestions} (${percent}%)
+      </div>
+      <div class="details-table">
+        <table>
+          <thead><tr><th>#</th><th>Bengali</th><th>Your Answer</th><th>Status</th><th>Correct Answer</th></tr></thead>
+          <tbody>
+    `;
+    let counter = 1;
+    for (let r of transResults) {
+      resultHtml += `<tr>
+        <td>${counter++}</td>
+        <td>${escapeHtml(r.bengali)}</td>
+        <td>${escapeHtml(r.userAnswer)}</td>
+        <td class="${r.isCorrect ? 'correct-status' : 'wrong-status'}">${r.isCorrect ? 'Correct' : 'Incorrect'}</td>
+        <td>${r.isCorrect ? '—' : escapeHtml(r.correct)}</td>
+      </tr>`;
+    }
+    resultHtml += `</tbody></table></div>`;
+
+    const resultDiv = document.getElementById('resultArea');
+    resultDiv.innerHTML = resultHtml;
+    resultDiv.style.display = 'block';
+    window.scrollTo({ top: resultDiv.offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function resetToInitialState() {
+    document.getElementById('studentNameInput').value = '';
+    for (let i = 0; i < translationData.length; i++) {
+      const inp = document.getElementById(`trans_${i}`);
+      if (inp) inp.value = '';
+    }
+    document.getElementById('testArea').style.display = 'none';
+    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('startPanel').style.display = 'block';
+    document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'none';
+  }
+
+  document.getElementById('startTestBtn').addEventListener('click', startTest);
+  document.getElementById('submitBtn').addEventListener('click', computeAndShowResults);
+  document.getElementById('resetBtn').addEventListener('click', resetToInitialState);
+
+  document.getElementById('testArea').style.display = 'none';
+
+  function toggleAdminPanel() {
+    let panel = document.getElementById("adminPanel");
+    panel.style.display = panel.style.display === "none" || panel.style.display === "" ? "block" : "none";
+    if (panel.style.display !== "block") {
+      document.getElementById("adminContent").style.display = "none";
+    }
+  }
+
+  function unlockAdmin() {
+    let pass = document.getElementById("adminPass").value;
+    if (pass === "juned2026") {
+      document.getElementById("adminContent").style.display = "block";
+      document.getElementById("videoLinkInput").value = currentVideoUrl;
+      document.getElementById("adminQuestionsData").value = JSON.stringify(translationData, null, 2);
+    } else {
+      alert("Wrong password");
+    }
+  }
+
+  function saveVideoAndQuestions() {
+    let newVideoUrl = document.getElementById("videoLinkInput").value.trim();
+    currentVideoUrl = newVideoUrl;
+    applyVideoToFrame();
+
+    try {
+      let newQuestions = JSON.parse(document.getElementById("adminQuestionsData").value);
+      if (Array.isArray(newQuestions) && newQuestions.length > 0) {
+        let valid = true;
+        for (let q of newQuestions) {
+          if (!q.hasOwnProperty("bengali") || !q.hasOwnProperty("correct") || !q.hasOwnProperty("patterns")) {
+            valid = false;
+            break;
+          }
+        }
+        if (valid) {
+          translationData = newQuestions;
+          saveToFirebase();
+          alert("✅ Saved to cloud!");
+          if (document.getElementById("testArea").style.display === "block") buildTranslationUI();
+        } else {
+          alert("❌ Each item needs 'bengali', 'correct', and 'patterns' array.");
+        }
+      } else {
+        alert("❌ Must be a non-empty array.");
+      }
+    } catch(e) {
+      alert("JSON error: " + e.message);
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    checkFirebaseConnection();
+    loadFromFirebase();
+    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("testArea").style.display = "none";
+    document.getElementById("resultArea").style.display = "none";
+    document.getElementById("startPanel").style.display = "block";
+  });
+</script>
+</body>
+</html>
