@@ -1099,6 +1099,49 @@
       color: #a1a1a6;
     }
 
+    /* ───── ADMIN ACCORDION ───── */
+    .admin-accordion { margin-top: 1.5rem; }
+
+    .admin-section {
+      background: var(--dark-bg);
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .admin-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 1.5rem;
+      cursor: pointer;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.05rem;
+      user-select: none;
+      transition: background .2s;
+    }
+
+    .admin-section-header:hover { background: rgba(255,255,255,0.05); }
+
+    .admin-section-header .arrow {
+      font-size: 0.85rem;
+      transition: transform .25s ease;
+      color: #a1a1a6;
+    }
+
+    .admin-section-header .arrow.open { transform: rotate(90deg); }
+
+    .admin-section-body {
+      padding: 0 1.5rem 1.5rem;
+      display: none;
+    }
+
+    .admin-section-body.open { display: block; }
+
+    .admin-section-body .admin-form { margin-bottom: 1.5rem; }
+    .admin-section-body .admin-list h3 { color: var(--dark-text); }
+
     /* ───── FOOTER ───── */
     footer {
       background: var(--dark-bg);
@@ -1384,111 +1427,132 @@
         </div>
       </div>
 
-      <div class="admin-form">
-        <h3 id="cartoonFormTitle">Add New Cartoon</h3>
-        <div class="form-group">
-          <label>Title</label>
-          <input type="text" id="adminTitle" placeholder="e.g. Peppa Pig - Going to School">
-        </div>
-        <div class="form-group">
-          <label>Video URL</label>
-          <input type="text" id="adminUrl" placeholder="YouTube, Dailymotion, Vimeo, or direct MP4 link">
-        </div>
-        <div class="form-group">
-          <label>Thumbnail Image URL (required for direct video files)</label>
-          <input type="text" id="adminThumbnail" placeholder="https://example.com/image.jpg">
-        </div>
-        <div class="form-group">
-          <label>Level</label>
-          <select id="adminLevel">
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Description (optional)</label>
-          <input type="text" id="adminDesc" placeholder="What will students learn?">
-        </div>
-        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-          <button class="btn btn-success" id="cartoonSubmitBtn" onclick="addCartoon()">Add Cartoon</button>
-          <button class="btn btn-ghost" id="cancelEditBtn" onclick="cancelEdit()" style="display:none;">Cancel Edit</button>
-        </div>
-      </div>
+      <div class="admin-accordion">
 
-      <div class="admin-list">
-        <h3>Your Cartoons (<span id="cartoonCount">0</span>)</h3>
-        <div id="adminCartoonList"></div>
-      </div>
+        <div class="admin-section">
+          <div class="admin-section-header" onclick="toggleAdminSection('cartoonSection')">
+            <span>🎬 Cartoons</span>
+            <span class="arrow" id="arrow-cartoonSection">▶</span>
+          </div>
+          <div class="admin-section-body" id="cartoonSection">
+            <div class="admin-form">
+              <h3 id="cartoonFormTitle">Add New Cartoon</h3>
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="adminTitle" placeholder="e.g. Peppa Pig - Going to School">
+              </div>
+              <div class="form-group">
+                <label>Video URL</label>
+                <input type="text" id="adminUrl" placeholder="YouTube, Dailymotion, Vimeo, or direct MP4 link">
+              </div>
+              <div class="form-group">
+                <label>Thumbnail Image URL (required for direct video files)</label>
+                <input type="text" id="adminThumbnail" placeholder="https://example.com/image.jpg">
+              </div>
+              <div class="form-group">
+                <label>Level</label>
+                <select id="adminLevel">
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Description (optional)</label>
+                <input type="text" id="adminDesc" placeholder="What will students learn?">
+              </div>
+              <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                <button class="btn btn-success" id="cartoonSubmitBtn" onclick="addCartoon()">Add Cartoon</button>
+                <button class="btn btn-ghost" id="cancelEditBtn" onclick="cancelEdit()" style="display:none;">Cancel Edit</button>
+              </div>
+            </div>
+            <div class="admin-list">
+              <h3>Your Cartoons (<span id="cartoonCount">0</span>)</h3>
+              <div id="adminCartoonList"></div>
+            </div>
+          </div>
+        </div>
 
-      <hr style="margin:2rem 0;border:none;border-top:1px solid var(--border);">
+        <div class="admin-section">
+          <div class="admin-section-header" onclick="toggleAdminSection('testSection')">
+            <span>📝 Tests</span>
+            <span class="arrow" id="arrow-testSection">▶</span>
+          </div>
+          <div class="admin-section-body" id="testSection">
+            <div class="admin-form">
+              <h3 id="testFormTitle">Add New Test</h3>
+              <div class="form-group">
+                <label>Test Title</label>
+                <input type="text" id="testTitle" placeholder="e.g. Spoken English Intermediate Test 1">
+              </div>
+              <div class="form-group">
+                <label>Test HTML File URL</label>
+                <input type="text" id="testUrl" placeholder="https://example.com/test1.html">
+              </div>
+              <div class="form-group">
+                <label>Level</label>
+                <select id="testLevel">
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Description (optional)</label>
+                <input type="text" id="testDesc" placeholder="What does this test cover?">
+              </div>
+              <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                <button class="btn btn-success" id="testSubmitBtn" onclick="addTest()">Add Test</button>
+                <button class="btn btn-ghost" id="cancelTestEditBtn" onclick="cancelTestEdit()" style="display:none;">Cancel Edit</button>
+              </div>
+            </div>
+            <div class="admin-list">
+              <h3>Your Tests (<span id="testCount">0</span>)</h3>
+              <div id="adminTestList"></div>
+            </div>
+          </div>
+        </div>
 
-      <div class="admin-form">
-        <h3 id="testFormTitle">Add New Test</h3>
-        <div class="form-group">
-          <label>Test Title</label>
-          <input type="text" id="testTitle" placeholder="e.g. Spoken English Intermediate Test 1">
+        <div class="admin-section">
+          <div class="admin-section-header" onclick="toggleAdminSection('vocabSection')">
+            <span>📚 Vocabulary Cards</span>
+            <span class="arrow" id="arrow-vocabSection">▶</span>
+          </div>
+          <div class="admin-section-body" id="vocabSection">
+            <div class="admin-form">
+              <h3 id="vocabFormTitle">Add New Vocabulary Card</h3>
+              <div class="form-group">
+                <label>Card Title</label>
+                <input type="text" id="vocabTitle" placeholder="e.g. Friend &amp; Celebrity">
+              </div>
+              <div class="form-group">
+                <label>Card Link URL</label>
+                <input type="text" id="vocabUrl" placeholder="e.g. Card 1.html or full URL">
+              </div>
+              <div class="form-group">
+                <label>Thumbnail Image URL</label>
+                <input type="text" id="vocabThumbnail" placeholder="https://example.com/thumbnail.jpg">
+              </div>
+              <div class="form-group">
+                <label>Badge Text (optional)</label>
+                <input type="text" id="vocabBadge" placeholder="e.g. 🏏 Cricket Star">
+              </div>
+              <div class="form-group">
+                <label>Description (optional)</label>
+                <input type="text" id="vocabDesc" placeholder="e.g. Words: knew, celebrity, conversation...">
+              </div>
+              <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                <button class="btn btn-success" id="vocabSubmitBtn" onclick="addVocabCard()">Add Card</button>
+                <button class="btn btn-ghost" id="cancelVocabEditBtn" onclick="cancelVocabEdit()" style="display:none;">Cancel Edit</button>
+              </div>
+            </div>
+            <div class="admin-list">
+              <h3>Your Vocabulary Cards (<span id="vocabCount">0</span>)</h3>
+              <div id="adminVocabList"></div>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Test HTML File URL</label>
-          <input type="text" id="testUrl" placeholder="https://example.com/test1.html">
-        </div>
-        <div class="form-group">
-          <label>Level</label>
-          <select id="testLevel">
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Description (optional)</label>
-          <input type="text" id="testDesc" placeholder="What does this test cover?">
-        </div>
-        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-          <button class="btn btn-success" id="testSubmitBtn" onclick="addTest()">Add Test</button>
-          <button class="btn btn-ghost" id="cancelTestEditBtn" onclick="cancelTestEdit()" style="display:none;">Cancel Edit</button>
-        </div>
-      </div>
 
-      <div class="admin-list">
-        <h3>Your Tests (<span id="testCount">0</span>)</h3>
-        <div id="adminTestList"></div>
-      </div>
-
-      <hr style="margin:2rem 0;border:none;border-top:1px solid var(--border);">
-
-      <div class="admin-form">
-        <h3 id="vocabFormTitle">Add New Vocabulary Card</h3>
-        <div class="form-group">
-          <label>Card Title</label>
-          <input type="text" id="vocabTitle" placeholder="e.g. Friend &amp; Celebrity">
-        </div>
-        <div class="form-group">
-          <label>Card Link URL</label>
-          <input type="text" id="vocabUrl" placeholder="e.g. Card 1.html or full URL">
-        </div>
-        <div class="form-group">
-          <label>Thumbnail Image URL</label>
-          <input type="text" id="vocabThumbnail" placeholder="https://example.com/thumbnail.jpg">
-        </div>
-        <div class="form-group">
-          <label>Badge Text (optional)</label>
-          <input type="text" id="vocabBadge" placeholder="e.g. 🏏 Cricket Star">
-        </div>
-        <div class="form-group">
-          <label>Description (optional)</label>
-          <input type="text" id="vocabDesc" placeholder="e.g. Words: knew, celebrity, conversation...">
-        </div>
-        <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-          <button class="btn btn-success" id="vocabSubmitBtn" onclick="addVocabCard()">Add Card</button>
-          <button class="btn btn-ghost" id="cancelVocabEditBtn" onclick="cancelVocabEdit()" style="display:none;">Cancel Edit</button>
-        </div>
-      </div>
-
-      <div class="admin-list">
-        <h3>Your Vocabulary Cards (<span id="vocabCount">0</span>)</h3>
-        <div id="adminVocabList"></div>
       </div>
     </div>
   </section>
@@ -2357,6 +2421,14 @@
       }
     }
 
+    function toggleAdminSection(id) {
+      const body = document.getElementById(id);
+      const arrow = document.getElementById('arrow-' + id);
+      const isOpen = body.classList.contains('open');
+      body.classList.toggle('open');
+      arrow.classList.toggle('open');
+    }
+
     function openAdmin() {
       const input = prompt('Enter admin password:');
       if (input === ADMIN_PASSWORD) {
@@ -2584,12 +2656,6 @@
       if (document.getElementById('adminPanel').classList.contains('active')) loadTestsAdmin();
     });
 
-    database.ref('vocabCards').once('value', snap => {
-      const existing = snap.val();
-      if (existing && existing.length > 0 && existing[0].title === 'Friend & Celebrity') {
-        database.ref('vocabCards').set([]);
-      }
-    });
     database.ref('vocabCards').on('value', snapshot => {
       globalVocabCards = snapshot.val() || [];
       loadVocabCards();
@@ -2602,3 +2668,4 @@
   </script>
 </body>
 </html>
+
