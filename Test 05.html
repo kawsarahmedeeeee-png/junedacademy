@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Juned Academy – Present Indefinite Tense</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -555,6 +558,10 @@
       const userAns = document.getElementById(`trans_${i}`)?.value || "";
       const q = translationData[i];
       const isCorrect = isTranslationCorrect(userAns, q.required);
+      if (i === 17) {
+        const tokens = wordSet(userAns);
+        alert("Q18 debug:\nYour answer: " + userAns + "\nTokens: " + JSON.stringify([...tokens]) + "\nRequired: " + formatRequired(q.required) + "\nResult: " + (isCorrect ? "Correct" : "Incorrect"));
+      }
       transResults.push({
         bengali: q.bengali,
         userAnswer: userAns === "" ? "(no answer)" : userAns,
