@@ -429,37 +429,63 @@
 <script>
   let translationData = [
     { bengali: "আমি প্রতিদিন পানি পান করি।", required: ["i", "drink", "water", "every", "day"] },
-    { bengali: "সে বই পড়তে পছন্দ করে।", required: ["she", "likes", "read", "books"] },
+    { bengali: "সে বই পড়তে পছন্দ করে।", required: [["he", "she"], "likes", ["read", "reading"], "books"] },
     { bengali: "তারা বিকেলে ফুটবল খেলে।", required: ["they", "play", "football", "afternoon"] },
     { bengali: "সূর্য উজ্জ্বলভাবে কিরণ দেয়।", required: ["sun", "shines"] },
     { bengali: "আমরা একটি বড় বাড়িতে বাস করি।", required: ["we", "live", "big", "house"] },
-    { bengali: "সে সুস্বাদু খাবার রান্না করে।", required: ["she", "cooks", "food"] },
-    { bengali: "বিড়াল অনেক ঘুমায়।", required: ["cat", "sleeps"] },
+    { bengali: "সে সুস্বাদু খাবার রান্না করে।", required: [["he", "she"], "cooks", "food"] },
+    { bengali: "বিড়াল অনেক ঘুমায়।", required: [["cat", "cats"], ["sleeps", "sleep"]], note: "cat/cats, sleeps/sleep" },
     { bengali: "তুমি খুব ভালো ইংরেজি বলো।", required: ["you", "speak", "english", "very", "well"] },
-    { bengali: "আমি কফি পছন্দ করি না।", required: ["i", "don't", "like", "coffee"] },
-    { bengali: "সে টিভি দেখে না।", required: ["she", "doesn't", "watch", "tv"] },
-    { bengali: "তাদের কোনো গাড়ি নেই।", required: ["they", "don't", "have", "car"] },
+    { bengali: "আমি কফি পছন্দ করি না।", required: ["i", "do", "not", "like", "coffee"] },
+    { bengali: "সে টিভি দেখে না।", required: [["he", "she"], "does", "not", "watch", "tv"] },
+    { bengali: "তাদের কোনো গাড়ি নেই।", required: ["they", "do", "not", "have", "car"] },
     { bengali: "আজ বৃষ্টি হয় না।", required: ["does", "not", "rain", "today"] },
-    { bengali: "আমরা উত্তরটি জানি না।", required: ["we", "don't", "know", "answer"] },
-    { bengali: "সে ছুটির দিনে কাজ করে না।", required: ["she", "does", "not", "work", "holidays"] },
-    { bengali: "কুকুর ওড়ে না।", required: ["dog", "does", "not", "fly"] },
-    { bengali: "তোমার চিন্তা করার দরকার নেই।", required: ["you", "don't", "need", "worry"] },
+    { bengali: "আমরা উত্তরটি জানি না।", required: ["we", "do", "not", "know", "answer"] },
+    { bengali: "সে ছুটির দিনে কাজ করে না।", required: [["he", "she"], "does", "not", "work", "holidays"] },
+    { bengali: "কুকুর ওড়ে না।", required: [["dog", "dogs"], ["does", "do"], "not", "fly"], note: "dog/dogs, does/do" },
+    { bengali: "তোমার চিন্তা করার দরকার নেই।", required: ["you", "do", "not", "need", "worry"] },
     { bengali: "তুমি কি কিছুটা জুস চাও?", required: ["do", "you", "want", "juice"] },
-    { bengali: "সে কি কাছাকাছি কোথাও থাকে?", required: ["does", "she", "live", "nearby"] },
+    { bengali: "সে কি কাছাকাছি কোথাও থাকে?", required: ["does", ["he", "she"], "live", "nearby"] },
     { bengali: "তারা কি পরীক্ষার জন্য পড়াশোনা করে?", required: ["do", "they", "study", "exam"] },
     { bengali: "ট্রেনটি কি সঠিক সময়ে আসে?", required: ["does", "train", "come", "time"] }
   ];
 
   let currentVideoUrl = "";
 
+  function expandContractions(str) {
+    return str
+      .replace(/\bdon't\b/gi, 'do not')
+      .replace(/\bdoesn't\b/gi, 'does not')
+      .replace(/\bwon't\b/gi, 'will not')
+      .replace(/\bcan't\b/gi, 'cannot')
+      .replace(/\bisn't\b/gi, 'is not')
+      .replace(/\baren't\b/gi, 'are not')
+      .replace(/\bwasn't\b/gi, 'was not')
+      .replace(/\bweren't\b/gi, 'were not')
+      .replace(/\bhaven't\b/gi, 'have not')
+      .replace(/\bhasn't\b/gi, 'has not')
+      .replace(/\bhadn't\b/gi, 'had not');
+  }
+
   function wordSet(str) {
-    return new Set(str.toLowerCase().match(/\b\w+\b/g) || []);
+    return new Set((expandContractions(str)).toLowerCase().match(/\b\w+\b/g) || []);
   }
 
   function isTranslationCorrect(userAnswer, requiredArr) {
     const words = wordSet(userAnswer);
-    const count = requiredArr.filter(r => words.has(r.toLowerCase())).length;
-    return count >= requiredArr.length;
+    for (const item of requiredArr) {
+      if (Array.isArray(item)) {
+        const found = item.some(alt => words.has(alt.toLowerCase()));
+        if (!found) return false;
+      } else {
+        if (!words.has(item.toLowerCase())) return false;
+      }
+    }
+    return true;
+  }
+
+  function formatRequired(arr) {
+    return arr.map(item => Array.isArray(item) ? item.join("/") : item).join(", ");
   }
 
   function escapeHtml(str) {
@@ -533,7 +559,7 @@
         bengali: q.bengali,
         userAnswer: userAns === "" ? "(no answer)" : userAns,
         isCorrect,
-        required: q.required.join(", ")
+        required: formatRequired(q.required)
       });
     }
 
