@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Juned Academy – Modal Verbs Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f0c29;
+      min-height: 100vh;
+      padding: 16px;
+      color: #e2e8f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ── Moving Dot Grid ── */
+    .dot-grid {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image: radial-gradient(circle, rgba(167,139,250,0.9) 1.5px, transparent 1.5px);
+      background-size: 40px 40px;
+      animation: driftDots 8s linear infinite;
+    }
+
+    @keyframes driftDots {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+
+    /* ── Floating Triangles (SVG) ── */
+    .triangles-layer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .tri-svg {
+      position: absolute;
+      fill: none;
+      stroke-width: 1.5;
+      opacity: 0.2;
+    }
+
+    .tri-svg.s1 {
+      width: 120px; height: 120px;
+      top: 6%; left: 8%;
+      stroke: #a78bfa;
+      animation: triDrift1 4s ease-in-out infinite alternate;
+    }
+    .tri-svg.s2 {
+      width: 90px; height: 90px;
+      top: 30%; right: 5%;
+      stroke: #ec4899;
+      animation: triDrift2 3.5s ease-in-out infinite alternate;
+    }
+    .tri-svg.s3 {
+      width: 150px; height: 150px;
+      bottom: 10%; left: 50%;
+      stroke: #3b82f6;
+      animation: triDrift3 4.5s ease-in-out infinite alternate;
+    }
+    .tri-svg.s4 {
+      width: 80px; height: 80px;
+      top: 55%; left: 5%;
+      stroke: #8b5cf6;
+      animation: triDrift4 3s ease-in-out infinite alternate;
+    }
+    .tri-svg.s5 {
+      width: 110px; height: 110px;
+      top: 15%; right: 20%;
+      stroke: #06b6d4;
+      animation: triDrift5 3.8s ease-in-out infinite alternate;
+    }
+    .tri-svg.s6 {
+      width: 140px; height: 140px;
+      bottom: 25%; left: 15%;
+      stroke: #7c3aed;
+      animation: triDrift6 4.2s ease-in-out infinite alternate;
+    }
+    .tri-svg.s7 {
+      width: 100px; height: 100px;
+      top: 70%; right: 10%;
+      stroke: #e879f9;
+      animation: triDrift7 3.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes triDrift1 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(80px,60px) rotate(90deg); } }
+    @keyframes triDrift2 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(-70px,-50px) rotate(-60deg); } }
+    @keyframes triDrift3 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(60px,-80px) rotate(120deg); } }
+    @keyframes triDrift4 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(-55px,65px) rotate(-100deg); } }
+    @keyframes triDrift5 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(-75px,40px) rotate(75deg); } }
+    @keyframes triDrift6 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(65px,-55px) rotate(-85deg); } }
+    @keyframes triDrift7 { 0% { transform: translate(0,0) rotate(0deg); } 100% { transform: translate(-45px,-70px) rotate(65deg); } }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Header ── */
+    .header {
+      text-align: center;
+      padding: 24px 16px 20px;
+    }
+    .header img {
+      height: 52px;
+      margin-bottom: 12px;
+      filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(255,255,255,0.15));
+    }
+    .header h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #a78bfa;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── Glass Card ── */
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px) saturate(1.1);
+      -webkit-backdrop-filter: blur(4px) saturate(1.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 24px 20px;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Video ── */
+    .video-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      background: rgba(0,0,0,0.4);
+      margin-bottom: 20px;
+    }
+    .video-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    /* ── Description ── */
+    .desc {
+      font-size: 0.85rem;
+      line-height: 1.9;
+      color: #cbd5e1;
+    }
+    .desc .dt {
+      font-weight: 700;
+      color: #f472b6;
+      font-size: 0.95rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .desc .sl {
+      font-weight: 700;
+      color: #a78bfa;
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 4px;
+    }
+    .desc .sl.ctr { text-align: center; }
+    .desc .el {
+      font-weight: 600;
+      color: #94a3b8;
+      font-style: italic;
+      display: block;
+      margin-top: 4px;
+    }
+    .desc .rl {
+      display: block;
+      padding-left: 12px;
+      color: #e2e8f0;
+    }
+
+    /* ── Name Input ── */
+    .name-section {
+      text-align: center;
+      margin-top: 8px;
+    }
+    .name-section label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #94a3b8;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .name-input {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 1rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.07);
+      color: #f1f5f9;
+      font-family: inherit;
+      transition: 0.3s;
+      outline: none;
+    }
+    .name-input::placeholder { color: #64748b; }
+    .name-input:focus {
+      border-color: #a78bfa;
+      box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: inherit;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 12px;
+    }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 6px 28px rgba(124, 58, 237, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #e11d48, #fb7185);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(225, 29, 72, 0.35);
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.08);
+      color: #94a3b8;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: none;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.12); color: #e2e8f0; }
+
+    .btn-sm {
+      width: 100%;
+      padding: 14px;
+      font-size: 0.85rem;
+      border-radius: 12px;
+    }
+
+    /* ── Test Area ── */
+    .test-area { display: none; position: relative; z-index: 1; }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #a78bfa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .q-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 18px 16px;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .q-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #7c3aed;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .q-bn {
+      font-size: 1.2rem;
+      font-weight: 500;
+      display: inline-block;
+      margin-bottom: 12px;
+      font-family: 'Noto Sans Bengali', sans-serif;
+      color: #f1f5f9;
+    }
+    .q-input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 0.95rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      color: #f1f5f9;
+      font-family: inherit;
+      outline: none;
+      transition: 0.3s;
+    }
+    .q-input::placeholder { color: #475569; }
+    .q-input:focus {
+      border-color: #a78bfa;
+      box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.15);
+    }
+
+    /* ── Results ── */
+    .result-area { display: none; position: relative; z-index: 1; }
+
+    .res-header {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #94a3b8;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .res-header span { color: #a78bfa; }
+
+    .score-ring {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      background: conic-gradient(#7c3aed var(--pct), rgba(255,255,255,0.08) 0);
+      position: relative;
+    }
+    .score-ring::before {
+      content: '';
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: #1e1b4b;
+    }
+    .score-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .score-inner .num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #a78bfa;
+      line-height: 1;
+    }
+    .score-inner .lbl {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    .res-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    .res-table th {
+      background: rgba(167, 139, 250, 0.15);
+      color: #a78bfa;
+      font-weight: 700;
+      padding: 12px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.7rem;
+    }
+    .res-table td {
+      padding: 12px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: #cbd5e1;
+      vertical-align: top;
+    }
+    .ok { color: #34d399; font-weight: 700; }
+    .no { color: #fb7185; font-weight: 700; }
+
+    /* ── Admin ── */
+    .admin-trigger {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 0.75rem;
+      color: #475569;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+      position: relative;
+      z-index: 1;
+    }
+    .admin-trigger:hover { color: #a78bfa; }
+
+    #adminPanel {
+      display: none;
+      margin-top: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    #adminPanel input[type="password"],
+    #adminPanel input[type="text"] {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      color: #f1f5f9;
+      font-family: inherit;
+      outline: none;
+      margin-bottom: 12px;
+    }
+    #adminPanel input::placeholder { color: #475569; }
+
+    #adminPanel label {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      display: block;
+      margin-bottom: 6px;
+      margin-top: 12px;
+    }
+
+    #adminPanel textarea {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      outline: none;
+      resize: vertical;
+      margin-top: 6px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 0.7rem;
+      color: #334155;
+      padding-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 480px) {
+      body { padding: 10px; }
+      .glass { padding: 18px 14px; border-radius: 16px; }
+      .q-bn { font-size: 1.05rem; padding: 6px 12px; }
+      .q-card { padding: 14px 12px; }
+      .header img { height: 44px; }
+      .header h1 { font-size: 0.95rem; }
+      .res-table { font-size: 0.7rem; }
+      .res-table th, .res-table td { padding: 8px 6px; }
+      .score-ring { width: 140px; height: 140px; }
+      .score-ring::before { width: 114px; height: 114px; }
+      .score-inner .num { font-size: 1.9rem; }
+    }
+
+    @media (max-width: 360px) {
+      .q-bn { font-size: 0.95rem; }
+      .desc { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Animated Background -->
+<div class="dot-grid"></div>
+<div class="triangles-layer">
+  <svg class="tri-svg s1" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95"/></svg>
+  <svg class="tri-svg s2" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95"/></svg>
+  <svg class="tri-svg s3" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95"/></svg>
+  <svg class="tri-svg s4" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95"/></svg>
+  <svg class="tri-svg s5" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95"/></svg>
+  <svg class="tri-svg s6" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95"/></svg>
+  <svg class="tri-svg s7" viewBox="0 0 100 100"><polygon points="50,5 95,95 5,95"/></svg>
+</div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <img src="https://raw.githubusercontent.com/kawsarahmedeeeee-png/Mock-Test/refs/heads/main/Bold.png" alt="Juned Academy">
+    <h1>Modal Verbs – Grammar Test</h1>
+  </div>
+
+  <!-- Start Panel -->
+  <div id="startPanel">
+    <div class="glass">
+      <div class="video-wrap">
+        <iframe id="lessonVideo" src="about:blank" title="Grammar video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <div class="desc">
+        <span class="dt">Modal Verbs — বাংলা অর্থসহ ব্যাখ্যা</span>
+
+        <span class="rl">Modal verbs = সাহায্যকারী ক্রিয়া যা সম্ভাবনা, ক্ষমতা, অনুমতি, বাধ্যবাধকতা বুঝায়।</span>
+
+        <span class="sl ctr">ব্যবহৃত Modal Verbs:</span>
+
+        <span class="sl">Can — ক্ষমতা / অনুমতি</span>
+        <span class="el">Ex-</span>
+        <span class="rl">I can swim. (আমি সাঁতার কাটতে পারি।)</span>
+        <span class="rl">Can you help me? (তুমি কি আমাকে সাহায্য করতে পারো?)</span>
+        <span class="rl">I cannot swim. (আমি সাঁতার কাটতে পারি না।)</span>
+
+        <span class="sl">Could — অতীতের ক্ষমতা / বিনীত অনুরোধ</span>
+        <span class="el">Ex-</span>
+        <span class="rl">He could play guitar. (সে গিটার বাজাতে পারত।)</span>
+        <span class="rl">Could you open the door? (তুমি কি দরজাটি খুলতে পারো?)</span>
+
+        <span class="sl">May — অনুমতি / সম্ভাবনা</span>
+        <span class="el">Ex-</span>
+        <span class="rl">It may rain today. (আজ বৃষ্টি হতে পারে।)</span>
+        <span class="rl">May I come in? (আমি কি ভিতরে আসতে পারি?)</span>
+
+        <span class="sl">Might — দুর্বল সম্ভাবনা</span>
+        <span class="el">Ex-</span>
+        <span class="rl">She might come tomorrow. (সে আগামীকাল আসতে পারে।)</span>
+        <span class="rl">They might not come. (তারা নাও আসতে পারে।)</span>
+
+        <span class="sl">Should — উচিত / পরামর্শ</span>
+        <span class="el">Ex-</span>
+        <span class="rl">You should study hard. (তোমার কঠোর পড়াশোনা করা উচিত।)</span>
+        <span class="rl">You should not smoke. (তোমার ধূমপান করা উচিত নয়।)</span>
+
+        <span class="sl">Would — বিনীত অনুরোধ / ইচ্ছা</span>
+        <span class="el">Ex-</span>
+        <span class="rl">I would like some tea. (আমি কিছু চা চাই।)</span>
+        <span class="rl">Would you help me? (তুমি কি আমাকে সাহায্য করবে?)</span>
+      </div>
+
+      <div class="name-section">
+        <label>Enter your full name to begin</label>
+        <input type="text" id="studentNameInput" class="name-input" placeholder="e.g., Rahim Uddin" autocomplete="off">
+      </div>
+      <button id="startTestBtn" class="btn btn-primary">Start Test</button>
+    </div>
+  </div>
+
+  <!-- Test Area -->
+  <div id="testArea" class="test-area">
+    <div class="section-title">Translate into English</div>
+    <div id="translationQuestions"></div>
+    <button id="submitBtn" class="btn btn-danger">Submit & Get Score</button>
+    <button id="resetBtn" class="btn btn-ghost">Start Over</button>
+  </div>
+
+  <!-- Result Area -->
+  <div id="resultArea" class="result-area"></div>
+
+  <!-- Admin -->
+  <div class="admin-trigger" onclick="toggleAdminPanel()">Admin Panel</div>
+  <div id="adminPanel">
+    <div class="glass">
+      <input type="password" id="adminPass" placeholder="Enter password">
+      <button class="btn btn-primary btn-sm" onclick="unlockAdmin()">Unlock</button>
+      <div id="adminContent" style="display:none; margin-top: 16px;">
+        <label>Video URL (YouTube or embed link)</label>
+        <input type="text" id="videoLinkInput" placeholder="https://www.youtube.com/watch?v=...">
+        <label>Edit Questions (JSON)</label>
+        <textarea id="adminQuestionsData" rows="8"></textarea>
+        <button class="btn btn-primary btn-sm" onclick="saveVideoAndQuestions()" style="margin-top:14px;">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Juned Academy — precise & modern practice tests</footer>
+</div>
+
+<script>
+  let translationData = [
+    { bengali: "আমি সাঁতার কাটতে পারি। (can)", required: ["i", "can", "swim"] },
+    { bengali: "সে ফরাসি ভাষায় কথা বলতে পারে। (can)", required: [["he", "she"], "can", "speak", "french"] },
+    { bengali: "তুমি আমার বই ধার নিতে পারো। (can)", required: ["you", "can", "borrow", "book"] },
+    { bengali: "সে ছোটবেলায় গিটার বাজাতে পারত।", required: [["he", "she"], "could", "play", "guitar"] },
+    { bengali: "আমরা গান শুনতে পেতাম।", required: ["we", "could", "hear", "music"] },
+    { bengali: "আজ বৃষ্টি হতে পারে।", required: ["it", "may", "rain", "today"] },
+    { bengali: "সে আগামীকাল আসতে পারে।", required: [["he", "she"], "might", "come", "tomorrow"] },
+    { bengali: "তোমার কঠোর পড়াশোনা করা উচিত। (should)", required: ["you", "should", "study", "hard"] },
+    { bengali: "আমাদের গরিবদের সাহায্য করা উচিত। (should)", required: ["we", "should", "help", "poor"] },
+    { bengali: "আমি এক কাপ চা চাই।", required: ["i", "would", "like", "cup", "tea"] },
+
+    { bengali: "আমি সাঁতার কাটতে পারি না।", required: ["i", "cannot", "swim"] },
+    { bengali: "সে গাড়ি চালাতে পারে না।", required: [["he", "she"], "cannot", "drive", "car"] },
+    { bengali: "সে চাবিটি খুঁজে পায়নি। (could)", required: [["he", "she"], "could", "not", "find", "key"] },
+    { bengali: "তারা আমাদের সাহায্য করতে পারেনি। (could)", required: ["they", "could", "not", "help", "us"] },
+    { bengali: "এটি সত্য নাও হতে পারে।", required: ["it", "may", "not", "be", "true"] },
+    { bengali: "তারা নাও আসতে পারে।", required: ["they", "might", "not", "come"] },
+    { bengali: "তোমার ধূমপান করা উচিত নয়।", required: ["you", "should", "not", "smoke"] },
+    { bengali: "আমাদের সময় নষ্ট করা উচিত নয়।", required: ["we", "should", "not", "waste", "time"] },
+    { bengali: "সে রাজি হবে না।", required: [["he", "she"], "would", "not", "agree"] },
+    { bengali: "আমি মিথ্যা বলতাম না।", required: ["i", "would", "not", "lie"] },
+
+    { bengali: "তুমি কি সাঁতার কাটতে পারো? (can)", required: ["can", "you", "swim"] },
+    { bengali: "আমি কি তোমাকে সাহায্য করতে পারি? (can)", required: ["can", "i", "help", "you"] },
+    { bengali: "তুমি কি দরজাটি খুলতে পারো? (could)", required: ["could", "you", "open", "door"] },
+    { bengali: "আমি কি ভিতরে আসতে পারি? (may)", required: ["may", "i", "come", "in"] },
+    { bengali: "আমি কি তোমার কলম ব্যবহার করতে পারি? (may)", required: ["may", "i", "use", "pen"] },
+    { bengali: "কি আগামীকাল বৃষ্টি হতে পারে?", required: ["might", "it", "rain", "tomorrow"] },
+    { bengali: "আমার কি তাকে ফোন করা উচিত?", required: ["should", "i", "call"] },
+    { bengali: "আমাদের কি এখন যাওয়া উচিত?", required: ["should", "we", "go", "now"] },
+    { bengali: "তুমি কি চা চাও?", required: ["would", "you", "like", "tea"] },
+    { bengali: "তুমি কি আমাকে সাহায্য করতে চাও? (would)", required: ["would", "you", "help", "me"] }
+  ];
+
+  let currentVideoUrl = "";
+
+  function expandContractions(str) {
+    return str
+      .replace(/\bdon't\b/gi, 'do not')
+      .replace(/\bdoesn't\b/gi, 'does not')
+      .replace(/\bwon't\b/gi, 'will not')
+      .replace(/\bcan't\b/gi, 'cannot')
+      .replace(/\bcouldn't\b/gi, 'could not')
+      .replace(/\bshouldn't\b/gi, 'should not')
+      .replace(/\bwouldn't\b/gi, 'would not')
+      .replace(/\bmightn't\b/gi, 'might not')
+      .replace(/\bisn't\b/gi, 'is not')
+      .replace(/\baren't\b/gi, 'are not')
+      .replace(/\bwasn't\b/gi, 'was not')
+      .replace(/\bweren't\b/gi, 'were not')
+      .replace(/\bhaven't\b/gi, 'have not')
+      .replace(/\bhasn't\b/gi, 'has not')
+      .replace(/\bhadn't\b/gi, 'had not');
+  }
+
+  function wordSet(str) {
+    return new Set((expandContractions(str)).toLowerCase().match(/\b\w+\b/g) || []);
+  }
+
+  function isTranslationCorrect(userAnswer, requiredArr) {
+    const words = wordSet(userAnswer);
+    for (const item of requiredArr) {
+      if (Array.isArray(item)) {
+        const found = item.some(alt => words.has(alt.toLowerCase()));
+        if (!found) return false;
+      } else {
+        if (!words.has(item.toLowerCase())) return false;
+      }
+    }
+    return true;
+  }
+
+  function formatRequired(arr) {
+    return arr.map(item => Array.isArray(item) ? item.join("/") : item).join(", ");
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  function buildTranslationUI() {
+    let html = '';
+    translationData.forEach((item, idx) => {
+      html += `
+        <div class="q-card">
+          <div class="q-num">Question ${idx+1}</div>
+          <div class="q-bn">${item.bengali}</div>
+          <input type="text" id="trans_${idx}" class="q-input" placeholder="Write English translation here..." autocomplete="off">
+        </div>
+      `;
+    });
+    document.getElementById('translationQuestions').innerHTML = html;
+  }
+
+  function extractEmbedUrl(url) {
+    url = url.trim();
+    const youtubeMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (youtubeMatch) return 'https://www.youtube.com/embed/' + youtubeMatch[1];
+    const shortsMatch = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
+    if (shortsMatch) return 'https://www.youtube.com/embed/' + shortsMatch[1];
+    if (url.match(/^https?:\/\/.+\/embed\//i)) return url;
+    if (url.match(/\.(mp4|webm|ogg|mov)(\?.*)?$/i)) return url;
+    return null;
+  }
+
+  function applyVideoToFrame() {
+    let iframe = document.getElementById("lessonVideo");
+    if (iframe && currentVideoUrl && currentVideoUrl.trim() !== "") {
+      const embedUrl = extractEmbedUrl(currentVideoUrl);
+      iframe.src = embedUrl || currentVideoUrl;
+    } else {
+      iframe.src = "about:blank";
+    }
+  }
+
+  function startTest() {
+    const studentName = document.getElementById('studentNameInput').value.trim();
+    if (studentName === "") {
+      alert("Please enter your name before starting the test.");
+      return;
+    }
+    applyVideoToFrame();
+    buildTranslationUI();
+    document.getElementById('startPanel').style.display = 'none';
+    document.getElementById('testArea').style.display = 'block';
+    document.getElementById('resultArea').style.display = 'none';
+  }
+
+  function computeAndShowResults() {
+    const studentName = document.getElementById('studentNameInput').value.trim();
+    const displayName = studentName === "" ? "Anonymous Student" : studentName;
+
+    let transResults = [];
+    for (let i = 0; i < translationData.length; i++) {
+      const userAns = document.getElementById(`trans_${i}`)?.value || "";
+      const q = translationData[i];
+      const isCorrect = isTranslationCorrect(userAns, q.required);
+      transResults.push({
+        bengali: q.bengali,
+        userAnswer: userAns === "" ? "(no answer)" : userAns,
+        isCorrect,
+        required: formatRequired(q.required)
+      });
+    }
+
+    const totalCorrect = transResults.filter(r => r.isCorrect).length;
+    const totalQuestions = transResults.length;
+    const percent = Math.round((totalCorrect / totalQuestions) * 100);
+
+    let resultHtml = `
+      <div class="glass">
+        <div class="res-header">Student: <span>${escapeHtml(displayName)}</span></div>
+        <div class="score-ring" style="--pct: ${percent}%;">
+          <div class="score-inner">
+            <div class="num">${percent}%</div>
+            <div class="lbl">${totalCorrect} / ${totalQuestions}</div>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="res-table">
+            <thead><tr><th>#</th><th>Bengali</th><th>Your Answer</th><th>Status</th><th>Required</th></tr></thead>
+            <tbody>
+    `;
+    let counter = 1;
+    for (let r of transResults) {
+      resultHtml += `<tr>
+        <td>${counter++}</td>
+        <td>${escapeHtml(r.bengali)}</td>
+        <td>${escapeHtml(r.userAnswer)}</td>
+        <td class="${r.isCorrect ? 'ok' : 'no'}">${r.isCorrect ? 'Correct' : 'Incorrect'}</td>
+        <td>${r.isCorrect ? '—' : escapeHtml(r.required)}</td>
+      </tr>`;
+    }
+    resultHtml += `</tbody></table></div></div>`;
+
+    const resultDiv = document.getElementById('resultArea');
+    resultDiv.innerHTML = resultHtml;
+    resultDiv.style.display = 'block';
+    window.scrollTo({ top: resultDiv.offsetTop - 20, behavior: 'smooth' });
+  }
+
+  function resetToInitialState() {
+    document.getElementById('studentNameInput').value = '';
+    for (let i = 0; i < translationData.length; i++) {
+      const inp = document.getElementById(`trans_${i}`);
+      if (inp) inp.value = '';
+    }
+    document.getElementById('testArea').style.display = 'none';
+    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('startPanel').style.display = 'block';
+    document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'none';
+  }
+
+  document.getElementById('startTestBtn').addEventListener('click', startTest);
+  document.getElementById('submitBtn').addEventListener('click', computeAndShowResults);
+  document.getElementById('resetBtn').addEventListener('click', resetToInitialState);
+
+  document.getElementById('testArea').style.display = 'none';
+
+  function toggleAdminPanel() {
+    let panel = document.getElementById("adminPanel");
+    panel.style.display = panel.style.display === "none" || panel.style.display === "" ? "block" : "none";
+    if (panel.style.display !== "block") {
+      document.getElementById("adminContent").style.display = "none";
+    }
+  }
+
+  function unlockAdmin() {
+    let pass = document.getElementById("adminPass").value;
+    if (pass === "juned2026") {
+      document.getElementById("adminContent").style.display = "block";
+      document.getElementById("videoLinkInput").value = currentVideoUrl;
+      document.getElementById("adminQuestionsData").value = JSON.stringify(translationData, null, 2);
+    } else {
+      alert("Wrong password");
+    }
+  }
+
+  function saveVideoAndQuestions() {
+    let newVideoUrl = document.getElementById("videoLinkInput").value.trim();
+    currentVideoUrl = newVideoUrl;
+    applyVideoToFrame();
+
+    try {
+      let newQuestions = JSON.parse(document.getElementById("adminQuestionsData").value);
+      if (Array.isArray(newQuestions) && newQuestions.length > 0) {
+        let valid = true;
+        for (let q of newQuestions) {
+          if (!q.hasOwnProperty("bengali") || !q.hasOwnProperty("required")) {
+            valid = false;
+            break;
+          }
+        }
+        if (valid) {
+          translationData = newQuestions;
+          alert("Changes applied!");
+          if (document.getElementById("testArea").style.display === "block") buildTranslationUI();
+        } else {
+          alert("Each item needs 'bengali' and 'required' array.");
+        }
+      } else {
+        alert("Must be a non-empty array.");
+      }
+    } catch(e) {
+      alert("JSON error: " + e.message);
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("testArea").style.display = "none";
+    document.getElementById("resultArea").style.display = "none";
+    document.getElementById("startPanel").style.display = "block";
+  });
+</script>
+</body>
+</html>
